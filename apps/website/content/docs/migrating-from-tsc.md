@@ -1,79 +1,79 @@
-# Migrating from tsc
+# 从 tsc 迁移
 
-If you are Migrating from TypeScript Compiler(tsc), there are a few things to keep in mind.
+如果你正在从 TypeScript 编译器(tsc)迁移，有几点需要注意。
 
-## TypeScript version
+## TypeScript 版本
 
-SWC supports the latest stable TypeScript.
+SWC 支持最新稳定版的 TypeScript。
 
 ## isolatedModules: true
 
-SWC works on file-by-file, so any code transforms that depend on understanding the full type system will not work.
+SWC 是逐文件工作的，所以任何依赖于理解完整类型系统的代码转换将无法工作。
 
-If you encounter these limitations, certain TypeScript features such as const enums and namespaces may cause runtime problems.
+如果你遇到这些限制，某些 TypeScript 特性如 const enums 和命名空间可能会导致运行时问题。
 
-In this case, using the [`isolatedModules`][isolatedmodules] flag in TypeScript can help to warn you of any code that may not be correctly interpreted by SWC.
+在这种情况下，在 TypeScript 中使用 [`isolatedModules`][isolatedmodules] 标志可以帮助你警告任何可能无法被 SWC 正确解释的代码。
 
-See [a comment on the related issue](https://github.com/swc-project/swc/issues/7101#issuecomment-1480610668) for more details.
+有关更多详情，请参阅[相关问题的评论](https://github.com/swc-project/swc/issues/7101#issuecomment-1480610668)。
 
 [isolatedmodules]: https://www.typescriptlang.org/tsconfig#isolatedModules
 
 ## importsNotUsedAsValues: "error"
 
-Due to the aforementioned reasons, SWC is unable to completely discern whether the imported binding is a `value` or a `type`.
+由于上述原因，SWC 无法完全辨别导入的绑定是`值`还是`类型`。
 
-Setting this [`importsNotUsedAsValues`][importsnotusedasvalues] option to `error` will ensure that TypeScript properly marks all type imports during type checking as `type`, thus removing them accurately in SWC.
+将 [`importsNotUsedAsValues`][importsnotusedasvalues] 选项设置为 `error` 将确保 TypeScript 在类型检查期间正确地将所有类型导入标记为 `type`，从而在 SWC 中准确地删除它们。
 
 [importsnotusedasvalues]: https://www.typescriptlang.org/tsconfig#importsNotUsedAsValues
 
 ## esModuleInterop: true
 
-The TypeScript's import interoperability deviates from the ES6 modules specification.
+TypeScript 的导入互操作性偏离了 ES6 模块规范。
 
-SWC, on the other hand, adopts a similar approach to Babel (which can sometimes be more stringent).
+而 SWC 则采用了类似于 Babel 的方法（有时可能更为严格）。
 
-Enabling this [esModuleInterop][esmoduleinterop] option ensures that tsc's behavior aligns with that of SWC.
+启用 [esModuleInterop][esmoduleinterop] 选项可确保 tsc 的行为与 SWC 的行为保持一致。
 
 [esmoduleinterop]: https://www.typescriptlang.org/tsconfig#esModuleInterop
 
 ## verbatimModuleSyntax: true
 
-This is a new option introduced in TypeScript 5.0 to replace `isolatedModules`, `preserveValueImports` and `importsNotUsedAsValues`.
-Please check the [release note][verbatimmodulesyntax] for further details.
+这是 TypeScript 5.0 中引入的新选项，用于替代 `isolatedModules`、`preserveValueImports` 和 `importsNotUsedAsValues`。
+请查看[发布说明][verbatimmodulesyntax]了解更多详情。
 
 [verbatimmodulesyntax]: https://devblogs.microsoft.com/typescript/announcing-typescript-5-0-beta/#verbatimmodulesyntax
 
 ## useDefineForClassFields
 
-This issue involves the semantics of `[[Define]]` and `[[Set]]`.
+此问题涉及 `[[Define]]` 和 `[[Set]]` 的语义。
 
-Who does not need to take care of it?
+谁不需要关注它？
 
-- Those who never use classes.
-- Those who use classes but never use inheritance.
+- 从不使用类的人。
+- 使用类但从不使用继承的人。
 
-Who needs to pay special attention to this matter?
+谁需要特别注意这个问题？
 
-- Decorator users.
+- 装饰器用户。
 
-If the value has already been set in your `tsconfig.json`, then the same value can be used in the configuration of swc.
+如果在你的 `tsconfig.json` 中已经设置了该值，那么相同的值可以在 swc 的配置中使用。
 
-If it has not been set and you encounter a problem, then it is necessary for you to supplement this setting.
+如果尚未设置并且你遇到问题，则有必要补充此设置。
 
-It should be noted that the default value of this option will change depending on the `target` of your `tsconfig.json`.
+应当注意，此选项的默认值将根据你的 `tsconfig.json` 的 `target` 而变化。
 
-Please check the [useDefineForClassFields][usedefineforclassfields] option.
+请查看 [useDefineForClassFields][usedefineforclassfields] 选项。
 
-> true if target is ES2022 or higher, including ESNext, false otherwise.
+> 如果 target 是 ES2022 或更高（包括 ESNext），则为 true，否则为 false。
 
 [usedefineforclassfields]: https://www.typescriptlang.org/tsconfig#useDefineForClassFields
 
-## Known issues
+## 已知问题
 
 - [TypeScript#16166](https://github.com/microsoft/TypeScript/issues/16166)
-  ES6 imports are not hoisted by tsc. If you rely on erroneous tsc implementation, you may encounter issues when migrating to swc, as swc more rigorously preserves ES module semantics.
+  ES6 导入不会被 tsc 提升。如果你依赖于 tsc 的错误实现，在迁移到 swc 时可能会遇到问题，因为 swc 更严格地保留 ES 模块语义。
 
-## Notes
+## 注意事项
 
-SWC only transpiles the code and doesn't perform type checking.
-Therefore, it's recommended that you continue to use tsc for detecting any type errors.
+SWC 只转译代码，不执行类型检查。
+因此，建议你继续使用 tsc 来检测任何类型错误。

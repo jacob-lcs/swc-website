@@ -1,13 +1,13 @@
 import { Callout, Tabs, Tab } from 'nextra/components'
 import Link from 'next/link'
 
-# Getting Started
+# 入门指南
 
-## Installation
+## 安装
 
-The easiest way to try SWC is using the [Playground](/playground).
+尝试 SWC 最简单的方式是使用[在线演示平台](/playground)。
 
-Otherwise, run the following to download pre-built binaries:
+或者，运行以下命令下载预编译的二进制文件：
 
 <Tabs items={['pnpm', 'npm', 'yarn']}>
   <Tabs.Tab>
@@ -27,22 +27,22 @@ Otherwise, run the following to download pre-built binaries:
   </Tabs.Tab>
 </Tabs>
 
-Then, you can transpile your first file and emit to `stdout`:
+然后，你可以转译你的第一个文件并输出到`stdout`：
 
 ```bash
 npx swc ./file.js
 ```
 
-## Supported Binaries
+## 支持的二进制版本
 
-SWC can be downloaded and used as a pre-built binary, or built from source. Currently, the following binaries are provided:
+SWC 可以作为预编译的二进制文件下载使用，也可以从源代码构建。目前，提供以下二进制版本：
 
 - Mac (Apple Silicon)
 - Mac (x64)
 - Linux (x86_64)
 - Linux (aarch64)
 - Linux (armv7)
-- Alpine Linux (also install `@swc/core-linux-musl`)
+- Alpine Linux (同时安装 `@swc/core-linux-musl`)
 - Android (aarch64)
 - Windows (win32-x64)
 - Windows (ia32)

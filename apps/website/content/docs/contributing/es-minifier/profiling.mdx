@@ -1,64 +1,64 @@
 ---
-title: Profiling
+title: 性能分析
 ---
 
-## Common Profiling Steps
+## 通用性能分析步骤
 
-If you have a problem with SWC minifier about memory allocation and you are on mac, you can use [`ddt`][] to profile the memory usage.
-Also, many steps are common to any kind of profiling.
+如果您在 Mac 上遇到 SWC 压缩器的内存分配问题，可以使用 [`ddt`][] 来分析内存使用情况。
+此外，许多步骤对于任何类型的性能分析都是通用的。
 
-### Step 1. Prepare the inputs
+### 步骤 1. 准备输入文件
 
-If you want to check the example directory for inputs, you can take a look at https://github.com/kdy1/swc-minifier-inputs.
-These input files are extracted from real next.js projects publicly available on github.
-See [debugging-nextjs-app](/docs/contributing/es-minifier/debugging-nextjs-app) for more details.
+如果您想查看输入文件的示例目录，可以查看 https://github.com/kdy1/swc-minifier-inputs。
+这些输入文件是从 GitHub 上公开可用的真实 Next.js 项目中提取的。
+更多详情请参阅 [调试 Next.js 应用](/docs/contributing/es-minifier/debugging-nextjs-app)。
 
-In this example, we will assume that the link above is cloned to `~/projects/minifier-inputs`.
-(i.e. `git clone https://github.com/kdy1/swc-minifier-inputs.git ~/projects/minifier-inputs`)
+在本示例中，我们假设上述链接已克隆到 `~/projects/minifier-inputs`。
+（即 `git clone https://github.com/kdy1/swc-minifier-inputs.git ~/projects/minifier-inputs`）
 
-Replace `~/projects/minifier-inputs` in the commands below with the directory containing your input files. It can be either a file or a directory containing the input files.
-All .js files will be minified, without writing the result to the disk.
+在下面的命令中，将 `~/projects/minifier-inputs` 替换为包含您输入文件的目录。它可以是文件或包含输入文件的目录。
+所有 .js 文件都将被压缩，但不会将结果写入磁盘。
 
-#### Step 2. Clone the repository
+#### 步骤 2. 克隆仓库
 
 ```bash
 git clone https://github.com/swc-project/swc.git
 cd ./swc/crates/swc_ecma_minifier
 ```
 
-## Profiling Time Usage
+## 分析时间使用情况
 
-### Step 3. Run the profiler
+### 步骤 3. 运行分析器
 
-You have two options. One is to use `samply`, which is cross-platform, and the other is to use XCode Instruments, which is only available on mac.
+您有两个选择。一种是使用 `samply`，它是跨平台的，另一种是使用 XCode Instruments，它仅在 Mac 上可用。
 
-#### Using `samply`
+#### 使用 `samply`
 
 ```bash
 CARGO_PROFILE_RELEASE_DEBUG=1 RUST_LOG=off ddt profile samply cargo --release --features concurrent --example minify-all -- ~/projects/minifier-inputs  to the directory containing your input files. It can be either a file or a directory containing the input files. All .js files will be minified (without writing the result to the disk)
 ```
 
-This will open a tab in your browser once the profiling is done.
+分析完成后，将在浏览器中打开一个标签页。
 
-#### Using XCode Instruments
+#### 使用 XCode Instruments
 
 ```bash
 CARGO_PROFILE_RELEASE_DEBUG=1 RUST_LOG=off ddt profile instruments cargo -t time --release --features concurrent --example minify-all -- ~/projects/minifier-inputs  to the directory containing your input files. It can be either a file or a directory containing the input files. All .js files will be minified (without writing the result to the disk)
 ```
 
-This will open the Instruments app once the profiling is done.
+分析完成后，将打开 Instruments 应用程序。
 
-## Profiling Memory Usage
+## 分析内存使用情况
 
-### Step 3. Run the profiler
+### 步骤 3. 运行分析器
 
-The command to run the profiler is as follows:
+运行分析器的命令如下：
 
 ```bash
 CARGO_PROFILE_RELEASE_DEBUG=1 RUST_LOG=off ddt profile instruments cargo -t 'Memory' --release --features concurrent --example minify-all -- ~/projects/minifier-inputs  to the directory containing your input files. It can be either a file or a directory containing the input files. All .js files will be minified (without writing the result to the disk)
 ```
 
-This will open the Instruments app once the profiling is done.
+分析完成后，将打开 Instruments 应用程序。
 
 ---
 

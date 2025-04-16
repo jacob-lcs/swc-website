@@ -1,7 +1,7 @@
 import { Callout } from 'nextra/components'
 
 <Callout>
-SWC provides an official JSON Schema for the configuration file.
+SWC 为配置文件提供了官方 JSON Schema。
 
 ```json filename=".swcrc" copy
 {
@@ -11,13 +11,13 @@ SWC provides an official JSON Schema for the configuration file.
 
 </Callout>
 
-# Modules
+# 模块
 
-SWC can transpile your code using ES Modules to CommonJS or UMD/AMD. By default, module statements will remain untouched.
+SWC 可以将您的代码从 ES 模块转译为 CommonJS 或 UMD/AMD。默认情况下，模块语句将保持不变。
 
 ## CommonJS
 
-To emit a CommonJS module, change the `type` in `.swcrc`:
+要生成 CommonJS 模块，请在 `.swcrc` 中更改 `type`：
 
 ```json filename=".swcrc" copy
 {
@@ -25,7 +25,7 @@ To emit a CommonJS module, change the `type` in `.swcrc`:
   "module": {
     "type": "commonjs",
 
-    // These are defaults.
+    // 以下为默认值
     "strict": false,
     "strictMode": true,
     "lazy": false,
@@ -36,14 +36,14 @@ To emit a CommonJS module, change the `type` in `.swcrc`:
 
 ## ES6
 
-To emit a ES6 module, change the `type` in `.swcrc`:
+要生成 ES6 模块，请在 `.swcrc` 中更改 `type`：
 
 ```json filename=".swcrc" copy
 {
   "module": {
     "type": "es6",
 
-    // These are defaults.
+    // 以下为默认值
     "strict": false,
     "strictMode": true,
     "lazy": false,
@@ -54,16 +54,16 @@ To emit a ES6 module, change the `type` in `.swcrc`:
 
 ## AMD
 
-To emit an AMD module, change the `type` in `.swcrc`:
+要生成 AMD 模块，请在 `.swcrc` 中更改 `type`：
 
 ```json filename=".swcrc" copy
 {
   "module": {
     "type": "amd",
-    // Optional. If specified, swc emits named AMD module.
+    // 可选。如果指定，swc 将生成命名的 AMD 模块。
     "moduleId": "foo",
 
-    // These are defaults.
+    // 以下为默认值
     "strict": false,
     "strictMode": true,
     "lazy": false,
@@ -74,7 +74,7 @@ To emit an AMD module, change the `type` in `.swcrc`:
 
 ## UMD
 
-To emit an UMD module, change the `type` in `.swcrc`:
+要生成 UMD 模块，请在 `.swcrc` 中更改 `type`：
 
 ```json filename=".swcrc" copy
 {
@@ -82,7 +82,7 @@ To emit an UMD module, change the `type` in `.swcrc`:
     "type": "umd",
     "globals": {},
 
-    // These are defaults.
+    // 以下为默认值
     "strict": false,
     "strictMode": true,
     "lazy": false,
@@ -91,14 +91,14 @@ To emit an UMD module, change the `type` in `.swcrc`:
 }
 ```
 
-## Shared Options
+## 共享选项
 
-These options are shared by `commonjs` / `es6` / `umd` / `amd` inside `.swcrc`:
+以下选项在 `.swcrc` 文件中被 `commonjs` / `es6` / `umd` / `amd` 共享：
 
 ```json filename=".swcrc" copy
 {
   "module": {
-    // You can specify "commonjs", "es6", "amd", "umd"
+    // 可以指定 "commonjs"、"es6"、"amd"、"umd"
     "type": "commonjs",
     "strict": false,
     "strictMode": true,
@@ -116,62 +116,60 @@ export const EsModuleText = () => <code className="nx-border-black nx-border-opa
 
 ### strict
 
-Defaults to `false`. By default, when using exports with SWC, a non-enumerable <EsModuleText /> property is exported. In some cases, this property is used to determine if the import is the default export or if it contains the default export.
+默认为 `false`。默认情况下，使用 SWC 的导出时，会导出一个不可枚举的 <EsModuleText /> 属性。在某些情况下，这个属性用于确定导入是默认导出还是包含默认导出。
 
-To prevent the <EsModuleText /> property from being exported, you can set the strict option to `true`.
+要防止导出 <EsModuleText /> 属性，可以将 strict 选项设置为 `true`。
 
 ### strictMode
 
-Defaults to `true`. If true, swc emits 'use strict' directive.
+默认为 `true`。如果为 true，swc 将生成 'use strict' 指令。
 
 ### lazy
 
-Defaults to `false`. This option changes Babel's compiled `import` statements to be lazily evaluated when their imported bindings are used for the first time. This can improve the initial load time of your module because evaluating dependencies upfront is sometimes entirely unnecessary. This is especially the case when implementing a library module.
+默认为 `false`。此选项会将 Babel 编译的 `import` 语句更改为懒加载评估，只在首次使用导入的绑定时才进行加载。这可以提高模块的初始加载时间，因为预先评估所有依赖项有时是完全不必要的。这在实现库模块时尤其如此。
 
-The value of `lazy` has a few possible effects:
+`lazy` 的值有几种可能的效果：
 
-- `false` - No lazy initialization of any imported module.
-- `true` - Do not lazy-initialize local `./foo` imports, but lazy-init `foo` dependencies. Local paths are much more likely to have circular dependencies, which may break if loaded lazily, so they are not lazy by default, whereas dependencies between independent modules are rarely cyclical.
-- `Array<string>` - Lazy-initialize all imports with source matching one of the given strings.
+- `false` - 不对任何导入的模块进行懒加载初始化。
+- `true` - 不对本地 `./foo` 导入进行懒加载初始化，但对 `foo` 依赖项进行懒加载。本地路径更有可能存在循环依赖，如果懒加载可能会导致问题，因此默认不会懒加载本地路径，而独立模块之间的依赖关系很少是循环的。
+- `Array<string>` - 懒加载所有源匹配给定字符串之一的导入。
 
-The two cases where imports can never be lazy are:
+导入永远不能懒加载的两种情况是：
 
 - `import "foo";`
-  Side-effect imports are automatically non-lazy since their very existence means that there is no binding to later kick-off initialization.
+  副作用导入会自动非懒加载，因为它们的存在本身就意味着没有稍后要初始化的绑定。
 - `export from "foo"`
-  Re-exporting all names requires up-front execution because otherwise there is no
-  way to know what names need to be exported.
+  重新导出所有名称需要预先执行，否则无法知道需要导出哪些名称。
 
 ### noInterop
 
-Defaults to `false`. By default, when using exports with swc a non-enumerable <EsModuleText /> property is exported.
-This property is then used to determine if the import is the default export or if it contains the default export.
+默认为 `false`。默认情况下，使用 swc 的导出时，会导出一个不可枚举的 <EsModuleText /> 属性。
+然后使用该属性来确定导入是默认导出还是包含默认导出。
 
-In cases where the auto-unwrapping of default is not needed, you can set the noInterop option to true to avoid the usage of the interopRequireDefault helper (shown in inline form above).
+在不需要自动解包默认值的情况下，可以将 noInterop 选项设置为 true，以避免使用 interopRequireDefault 帮助器（如上面内联形式所示）。
 
 ### ignoreDynamic
 
-If set to `true`, dynamic imports will be preserved.
+如果设置为 `true`，动态导入将被保留。
 
 ### preserveImportMeta
 
-If set to `true`, `import.meta` will be preserved.
+如果设置为 `true`，`import.meta` 将被保留。
 
 ### importInterop
 
-Possible values:
+可能的值：
 
-- `swc` (alias: `babel`)
+- `swc`（别名：`babel`）
 - `node`
 - `none`
 
-Defaults to `none` if `noInterop` is true, and `swc` otherwise.
+如果 `noInterop` 为 true，则默认为 `none`，否则默认为 `swc`。
 
 ### resolveFully
 
-When set to `true`, fully resolves module `import` file paths, including any that end with `index.js`.
+设置为 `true` 时，将完全解析模块 `import` 文件路径，包括那些以 `index.js` 结尾的路径。
 
 ### outFileExtension
 
-when supplied with `resolveFully`, this will change the extension of any locally resolved file paths to
-be the one specified. You should use this extension to match the `--out-file-extension` option for @swc/cli.
+与 `resolveFully` 一起使用时，这将把任何本地解析的文件路径的扩展名更改为指定的扩展名。您应该使用此扩展名来匹配 @swc/cli 的 `--out-file-extension` 选项。

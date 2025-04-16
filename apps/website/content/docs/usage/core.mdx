@@ -2,24 +2,24 @@ import TypeDeclarations from 'components/TypeDeclarations'
 
 # @swc/core
 
-These are the core SWC APIs mainly useful for build tool authors.
+这些是 SWC 的核心 API，主要对构建工具作者有用。
 
 ## transform
 
-`@swc/core` provides appropriate `.d.ts` file, so you may not need this. Returns `Promise<{ code: string, map?: string }>`
+`@swc/core` 提供了适当的 `.d.ts` 文件，所以你可能不需要这个。返回 `Promise<{ code: string, map?: string }>`
 
 ```js copy
 const swc = require("@swc/core");
 
 swc
   .transform("source code", {
-    // Some options cannot be specified in .swcrc
+    // 有些选项不能在 .swcrc 中指定
     filename: "input.js",
     sourceMaps: true,
-    // Input files are treated as module by default.
+    // 输入文件默认被视为模块
     isModule: false,
 
-    // All options below can be configured via .swcrc
+    // 以下所有选项都可以通过 .swcrc 配置
     jsc: {
       parser: {
         syntax: "ecmascript",
@@ -28,26 +28,26 @@ swc
     },
   })
   .then((output) => {
-    output.code; // transformed code
-    output.map; // source map (in string)
+    output.code; // 转换后的代码
+    output.map; // 源映射（字符串形式）
   });
 ```
 
 ### transformSync
 
-Returns `{ code: string, map?: string }`
+返回 `{ code: string, map?: string }`
 
 ### transformFile
 
-Returns `Promise<{ code: string, map?: string }>`
+返回 `Promise<{ code: string, map?: string }>`
 
 ### transformFileSync
 
-Returns `{ code: string, map?: string }`
+返回 `{ code: string, map?: string }`
 
 ## parse
 
-Returns `Promise<Script | Module>`
+返回 `Promise<Script | Module>`
 
 ```ts copy
 const swc = require('@swc/core')
@@ -58,14 +58,14 @@ swc
     comments: false,
     script: true,
 
-    // Defaults to es3
+    // 默认为 es3
     target: "es3",
 
-    // Input source code are treated as module by default
+    // 输入源代码默认被视为模块
     isModule: false,
   })
   .then((module) => {
-    module.type // file type
+    module.type // 文件类型
     module.body; // AST
   })
 ```
@@ -156,19 +156,19 @@ export interface EsParserConfig {
 
 ### parseSync
 
-Returns `Script | Module`
+返回 `Script | Module`
 
 ### parseFile
 
-Returns `Promise<Script | Module>`
+返回 `Promise<Script | Module>`
 
 ### parseFileSync
 
-Returns `Script | Module`
+返回 `Script | Module`
 
 ## minify
 
-Returns `Promise<Output>`
+返回 `Promise<Output>`
 
 ```ts
 const swc = require('@swc/core')
@@ -279,7 +279,7 @@ export interface TerserManglePropertiesOptions {
 
 ### minifySync
 
-Returns `Output`
+返回 `Output`
 
 ## Options
 

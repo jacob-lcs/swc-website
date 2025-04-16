@@ -1,5 +1,5 @@
 ---
-title: Rust-based platform for the Web
+title: 基于 Rust 的 Web 平台
 ---
 
 import { Callout, Tabs, Tab } from 'nextra/components'
@@ -8,37 +8,37 @@ import { Callout, Tabs, Tab } from 'nextra/components'
 
 <div className="mx-auto max-w-full w-[880px] text-center px-4 my-10">
   {<p className="text-lg mb-2 text-gray-600 md:!text-2xl">
-    Rust-based platform for the Web
+    基于 Rust 的 Web 平台
   </p>}
 </div>
 
-SWC is an extensible Rust-based platform for the next generation of fast developer tools. It's used by tools like Next.js, Parcel, and Deno, as well as companies like Vercel, ByteDance, Tencent, Shopify, Trip.com, and [more](/docs/customers).
+SWC 是一个可扩展的、基于 Rust 的平台，用于下一代高速开发者工具。它被 Next.js、Parcel 和 Deno 等工具采用，以及 Vercel、字节跳动、腾讯、Shopify、携程等[众多公司](/docs/customers)使用。
 
-SWC can be used for both compilation and bundling. For compilation, it takes JavaScript / TypeScript files using modern JavaScript features and outputs valid code that is supported by all major browsers.
+SWC 可用于代码编译和打包。在编译方面，它接收使用现代 JavaScript 特性的 JavaScript / TypeScript 文件，并输出所有主流浏览器支持的有效代码。
 
 <Callout emoji="🏎">
-  SWC is <strong>20x faster than Babel</strong> on a single thread and <strong>70x faster</strong> on four cores.
+  SWC 在单线程上<strong>比 Babel 快 20 倍</strong>，在四核心上<strong>快 70 倍</strong>。
 </Callout>
 
 <div className="mt-16 mb-20 text-center">
-  [Get Started](/docs/getting-started) · [Playground](/playground) · [Blog](/blog/perf-swc-vs-babel) · [Rustdocs](https://rustdoc.swc.rs/swc/) · [GitHub Repository](https://github.com/swc-project/swc) · [Donate](https://opencollective.com/swc)
+  [开始使用](/docs/getting-started) · [在线试用](/playground) · [博客](/blog/perf-swc-vs-babel) · [Rust 文档](https://rustdoc.swc.rs/swc/) · [GitHub 仓库](https://github.com/swc-project/swc) · [捐赠](https://opencollective.com/swc)
 </div>
 
-## Overview
+## 概述
 
-SWC can be downloaded and used as a pre-built binary, or built from source. Currently, the following binaries are provided:
+SWC 可以作为预构建的二进制文件下载使用，也可以从源代码构建。目前提供以下二进制文件：
 
 - Mac (Apple Silicon)
 - Mac (x64)
 - Linux (x86_64)
 - Linux (aarch64)
 - Linux (armv7)
-- Alpine Linux (also install `@swc/core-linux-musl`)
+- Alpine Linux (同时需安装 `@swc/core-linux-musl`)
 - Android (aarch64)
 - Windows (win32-x64)
 - Windows (ia32)
 
-#### Download prebuilt binaries
+#### 下载预构建的二进制文件
 
 <Tabs items={['pnpm', 'npm', 'yarn']}>
   <Tabs.Tab>
@@ -58,27 +58,27 @@ SWC can be downloaded and used as a pre-built binary, or built from source. Curr
   </Tabs.Tab>
 </Tabs>
 
-#### Transpile JavaScript file and emit to stdout
+#### 转译 JavaScript 文件并输出到标准输出
 
 ```bash copy
 npx swc ./file.js
 ```
 
-## Features
+## 特性
 
-SWC is designed to be extensible. Currently, there is support for:
+SWC 设计为可扩展的。目前支持：
 
-- Compilation
-- Bundling (`swcpack`, under development)
-- Minification
-- Transforming with WebAssembly
-- Usage inside webpack (`swc-loader`)
-- Improving Jest performance (`@swc/jest`)
-- Custom Plugins
+- 编译
+- 打包（`swcpack`，开发中）
+- 代码压缩
+- 使用 WebAssembly 进行转换
+- 在 webpack 中使用（`swc-loader`）
+- 提升 Jest 性能（`@swc/jest`）
+- 自定义插件
 
-[Learn more](/docs/getting-started).
+[了解更多](/docs/getting-started)。
 
-## Community
+## 社区
 
 <div className="space-y-3">
   <div className="flex h-6">
@@ -94,7 +94,7 @@ SWC is designed to be extensible. Currently, there is support for:
   </div>
 </div>
 
-SWC is created by [kdy1](https://github.com/kdy1).
-Follow [@kdy1dev](https://twitter.com/kdy1dev) on Twitter for future project updates.
+SWC 由 [kdy1](https://github.com/kdy1) 创建。
+在 Twitter 上关注 [@kdy1dev](https://twitter.com/kdy1dev) 获取项目的最新更新。
 
-Feel free to join the [discussions on GitHub](https://github.com/swc-project/swc/discussions)!
+欢迎加入 [GitHub 上的讨论](https://github.com/swc-project/swc/discussions)！

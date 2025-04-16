@@ -1,69 +1,69 @@
-# Selecting the version
+# 选择版本
 
-Currently, the Wasm plugins are not backwards compatible.
-So you need to select an appropriate version of `swc_core` for your plugin.
+目前，Wasm 插件不向后兼容。
+因此，您需要为您的插件选择合适版本的 `swc_core`。
 
-We provide a simple webapp to help you select the version of `swc_core`.
+我们提供了一个简易的网页应用来帮助您选择 `swc_core` 的版本。
 
-See: https://plugins.swc.rs
+请访问：https://plugins.swc.rs
 
-You can select the framework and the version of **framework** you are using, and the Wasm plugins compatible with it will be shown.
+您可以选择您正在使用的框架及其版本，网页将显示与之兼容的 Wasm 插件。
 
-# OLD Documentation for the version of `swc_core`
+# 旧版关于 `swc_core` 版本的文档
 
-Please use the webapp instead.
+请使用上述网页应用替代本文档。
 
-The page documents the version of `swc_core` you can use for each runtime.
+本页面记录了您可以为各个运行时使用的 `swc_core` 版本。
 
-## Note for next.js
+## Next.js 注意事项
 
-- [next `v13.2.4` ~ `v13.3.1` cannot execute SWC Wasm plugins, due to a bug of `next-swc`](https://github.com/vercel/next.js/issues/46989#issuecomment-1486989081).
+- [由于 `next-swc` 的一个 bug，next `v13.2.4` ~ `v13.3.1` 无法执行 SWC Wasm 插件](https://github.com/vercel/next.js/issues/46989#issuecomment-1486989081)。
 
 ## swc_core
 
-If you use a version in a range of the title, the Wasm plugin will work for the runtimes written in the body.
+如果您使用标题所示范围内的版本，Wasm 插件将适用于正文中列出的运行时。
 
 ### `v0.98.x` ~
 
-#### Changes
+#### 变更
 
-- `Span.ctxt` is removed to reduce the size of `Span`.
-- `ctxt: SyntaxContext` is added to various AST nodes.
-- `IdentName` is used instead of `Ident` in some places like `MemberProp`, because those fields does not need `ctxt` or `optional`.
+- 移除了 `Span.ctxt` 以减小 `Span` 的大小。
+- 在各种 AST 节点中添加了 `ctxt: SyntaxContext`。
+- 在某些地方（如 `MemberProp`）使用 `IdentName` 替代 `Ident`，因为这些字段不需要 `ctxt` 或 `optional`。
 
-#### Upgrade guide
+#### 升级指南
 
-- The update PR for the official plugins: [plugins#334](https://github.com/swc-project/plugins/pull/334)
+- 官方插件的更新 PR：[plugins#334](https://github.com/swc-project/plugins/pull/334)
 
-#### Versions
+#### 版本
 
 - `@swc/core@1.7.x`
-- `next@v15.0.0-canary.117` (reverted in `next@v15.0.0-canary.118`)
+- `next@v15.0.0-canary.117`（在 `next@v15.0.0-canary.118` 中被还原）
 - `next@v15.0.0-canary.122` ~
 
 ### `v0.95.x` ~ `v0.96.x`
 
-- [CHANGELOG](https://github.com/swc-project/swc/blob/064af5391d8da9599f277bd68fd0b479b0b1235c/CHANGELOG.md#160---2024-06-15)
+- [更新日志](https://github.com/swc-project/swc/blob/064af5391d8da9599f277bd68fd0b479b0b1235c/CHANGELOG.md#160---2024-06-15)
 
-We optimized some AST type definitions.
+我们优化了一些 AST 类型定义。
 
 - `@swc/core@1.6.x`
 - `next@15.0.0-canary.37` ~ `next@v15.0.0-canary.116`
 
 ### `v0.94.x`
 
-Do not use this version if you are building a plugin for SWC.
+如果您正在为 SWC 构建插件，请勿使用此版本。
 
 ### `v0.91.x` ~ `v0.93.x`
 
-We added support for abstract auto-accessors.
+我们增加了对抽象自动访问器的支持。
 
 - `@swc/core@1.5.x`
 - `next@15.0.0-canary.29` ~ `v15.0.0-canary.36`
 
 ### `v0.90.x`
 
-We refactored AST to make it less error-prone.
+我们重构了 AST 以使其更不易出错。
 
 - `@swc/core@1.4.x`
 - `next@14.1.1-canary.52` ~ `next@15.0.0-canary.28`
@@ -71,19 +71,19 @@ We refactored AST to make it less error-prone.
 
 ### `v0.88.x` ~ `v0.89.x`
 
-Support for import phase proposal (stage 3) was added.
+增加了对导入阶段提案（stage 3）的支持。
 
 - `@swc/core@1.3.106` ~ `@swc/core@1.3.107`
 - `@rspack/core@0.5.8` ~ `@rspack/core@0.5.9`
 
 ### `v0.82.x` ~ `v0.87.x`
 
-We modified AST definitions because of `with` of [Import Attributes proposal](https://github.com/tc39/proposal-import-attributes).
+由于[导入属性提案](https://github.com/tc39/proposal-import-attributes)中的 `with` 关键字，我们修改了 AST 定义。
 
 - `@swc/core@1.3.81` ~ `@swc/core@1.3.105`
 - ~ `next@14.1.0`
 
-Note: You may need to specify the version of `swc_common`, too, like
+注意：您可能需要同时指定 `swc_common` 的版本，例如：
 
 ```toml
 [dependencies]
@@ -92,41 +92,41 @@ swc_common = "=0.33.15"
 
 ### `v0.79.x` ~ `v0.81.x`
 
-We modified AST definitions because of `await` of [Explicit Resource Management proposal](https://github.com/tc39/proposal-explicit-resource-management).
+由于[显式资源管理提案](https://github.com/tc39/proposal-explicit-resource-management)中的 `await` 关键字，我们修改了 AST 定义。
 
 - `@swc/core@1.3.68` ~ `@swc/core@1.3.80`
 - `next@13.4.10-canary.1` ~
 
 ### `v0.78.x`
 
-We modified AST definitions because some of the previous definitions were misdesigned.
+由于之前的一些定义设计不当，我们修改了 AST 定义。
 
 - `@swc/core@1.3.63` ~ `@swc/core@1.3.67`
 - `next@13.4.8` ~ `next@13.4.10-canary.0`
 
 ### `v0.76.x` ~ `v0.77.x`
 
-We modified AST definitions because of [Explicit Resource Management proposal](https://github.com/tc39/proposal-explicit-resource-management), which is stage 3.
+由于 stage 3 阶段的[显式资源管理提案](https://github.com/tc39/proposal-explicit-resource-management)，我们修改了 AST 定义。
 
 - `@swc/core@1.3.58` ~ `@swc/core@1.3.62`
 - `next@13.4.3-canary.2` ~ `next@13.4.7`
 
 ### `v0.75.x`
 
-We enabled strict mode of `rkyv` and updated `wasmer` to `v3`.
+我们启用了 `rkyv` 的严格模式并将 `wasmer` 更新至 `v3`。
 
 - `@swc/core@1.3.49` ~ `@swc/core@1.3.57`
 - `v13.3.1-canary.12` ~ `next@13.4.3-canary.1`
 
 ### `v0.72.4` ~ `v0.74.6`
 
-We updated `rkyv` to `v0.7.40` and the bug is now fixed.
+我们将 `rkyv` 更新至 `v0.7.40`，现在该 bug 已修复。
 
 - `@swc/core@1.3.44` ~ `@swc/core@1.3.47`
 
 ### `v0.69.x` ~ `v0.72.3`
 
-Due to a bug of `rkyv@0.7.37`, you are recommended to use `nightly-2022-09-23` as the compiler if you are building a plugin for these targets.
+由于 `rkyv@0.7.37` 的一个 bug，如果您正在为这些目标构建插件，建议使用 `nightly-2022-09-23` 作为编译器。
 
 - `@swc/core@1.3.40` ~ `@swc/core@1.3.42`
 - `next@13.2.5-canary.5`

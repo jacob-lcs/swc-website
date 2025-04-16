@@ -5,19 +5,19 @@ description: 'SWC (Speedy Web Compiler) is a super-fast JavaScript and TypeScrip
 
 import Authors, { Author } from 'components/authors'
 
-# Introducing SWC 1.0
+# 介绍 SWC 1.0
 
 <Authors date="February 8th, 2019">
   <Author name="DongYoon Kang" link="https://twitter.com/kdy1dev" />
 </Authors>
 
-## What is SWC?
+## SWC 是什么？
 
-[swc](https://github.com/swc-project/swc) (speedy web compiler) is a super-fast JavaScript compiler.
+[swc](https://github.com/swc-project/swc)（speedy web compiler，快速网页编译器）是一个超快的 JavaScript 编译器。
 
-## What can SWC do?
+## SWC 能做什么？
 
-It can transpile TypeScript / jsx / ECMAScript 2019 to browser-compatible JavaScript.
+它可以将 TypeScript、JSX 或 ECMAScript 2019 转译为浏览器兼容的 JavaScript。
 
 ```js
 // input.js
@@ -31,31 +31,31 @@ class Bar extends Foo {
 }
 ```
 
-## How fast is SWC?
+## SWC 有多快？
 
-It's 16x - 20x faster than babel even on single-core synchronous benchmark. Note that actual performance gap is larger because swc works on worker thread while babel works on event loop thread.
+即使在单核同步基准测试中，它也比 babel 快 16-20 倍。请注意，实际性能差距更大，因为 swc 在工作线程上运行，而 babel 在事件循环线程上运行。
 
-## Installation
+## 安装
 
-You can install `swc` with
+您可以通过以下方式安装 `swc`：
 
 ```sh
-# if you use npm
+# 如果使用 npm
 npm i -D @swc/core
 
-# if you use yarn
+# 如果使用 yarn
 yarn add -D @swc/core
 ```
 
-See [Getting Started](/docs/getting-started) for more details.
+查看[入门指南](/docs/getting-started)了解更多详情。
 
-## What's included in SWC 1.0?
+## SWC 1.0 包含哪些功能？
 
-Swc implements almost all babel plugins. As of 1.0.0, swc can understand various dialects of ecmascript and compiles them into es5.
+Swc 实现了几乎所有的 babel 插件。从 1.0.0 版本开始，swc 可以理解各种 ECMAScript 方言并将它们编译为 ES5。
 
-### ECMAScript 2019 support
+### ECMAScript 2019 支持
 
-`.swcrc`:
+`.swcrc`：
 
 ```json
 {
@@ -67,9 +67,9 @@ Swc implements almost all babel plugins. As of 1.0.0, swc can understand various
 }
 ```
 
-### React (with jsx)
+### React（带 JSX）
 
-`.swcrc`:
+`.swcrc`：
 
 ```json
 {
@@ -82,11 +82,11 @@ Swc implements almost all babel plugins. As of 1.0.0, swc can understand various
 }
 ```
 
-### TypeScript support
+### TypeScript 支持
 
-Swc can also compile typescript / tsx to ecmascript. Note that it does not type-check at the time of writing. Type checking is tracked at [#126](https://github.com/swc-project/swc/issues/126).
+Swc 还可以将 TypeScript/TSX 编译为 ECMAScript。请注意，在撰写本文时，它不执行类型检查。类型检查在 [#126](https://github.com/swc-project/swc/issues/126) 中进行跟踪。
 
-`.swcrc`:
+`.swcrc`：
 
 ```json
 {
@@ -99,9 +99,9 @@ Swc can also compile typescript / tsx to ecmascript. Note that it does not type-
 }
 ```
 
-See [docs](/docs/configuration/swcrc) for more details.
+有关更多详情，请参阅[文档](/docs/configuration/swcrc)。
 
-### Various Transforms
+### 各种转换
 
 - es3
 
@@ -126,7 +126,7 @@ See [docs](/docs/configuration/swcrc) for more details.
   - parameters
   - shorthand-properties
   - spread
-  - sticky regex (`y` flag)
+  - sticky regex（`y` 标志）
   - template-literals
   - typeof-symbol
 
@@ -145,21 +145,21 @@ See [docs](/docs/configuration/swcrc) for more details.
 - react
   - jsx
 
-## Migrating from Babel
+## 从 Babel 迁移
 
 ### @babel/core
 
-Run `npm i --save-dev @swc/core` or `yarn add --dev @swc/core`.
+运行 `npm i --save-dev @swc/core` 或 `yarn add --dev @swc/core`。
 
-Swc enables all passes by default. So if you are using only standard ecmascript, you can just delete `.babelrc` and change `babel.transform()` to `swc.transform()`.
+Swc 默认启用所有转换。因此，如果您仅使用标准 ECMAScript，可以直接删除 `.babelrc` 并将 `babel.transform()` 更改为 `swc.transform()`。
 
-See [usage docs](/docs/usage/core) and [migration docs](/docs/migrating-from-babel) for more details.
-Also note that swc does not support custom plugin yet.
+有关更多详情，请参阅[使用文档](/docs/usage/core)和[迁移文档](/docs/migrating-from-babel)。
+还请注意，swc 目前不支持自定义插件。
 
 ### @babel/cli
 
-Run `npm i --save-dev @swc/core @swc/cli` or `yarn add --dev @swc/core @swc/cli` to install. CLI apis of `@swc/cli` is almost equivalent to it of `@babel/cli`. So if you are using standard ecmascript, you can just replace `npx babel` to `npx swc`. If it results in an error, please [report an error][issues].
+运行 `npm i --save-dev @swc/core @swc/cli` 或 `yarn add --dev @swc/core @swc/cli` 进行安装。`@swc/cli` 的命令行 API 与 `@babel/cli` 基本等同。因此，如果您使用标准 ECMAScript，可以直接将 `npx babel` 替换为 `npx swc`。如果出现错误，请[报告问题][issues]。
 
-See [usage docs](/docs/usage/cli) and [migration docs](/docs/migrating-from-babel) for more details. Also note that swc does not support custom plugins yet.
+有关更多详情，请参阅[使用文档](/docs/usage/cli)和[迁移文档](/docs/migrating-from-babel)。还请注意，swc 目前不支持自定义插件。
 
 [issues]: https://github.com/swc-project/swc/issues

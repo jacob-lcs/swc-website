@@ -1,23 +1,23 @@
 import { Callout } from 'nextra/components'
 
-# Bundling Configuration
+# 打包配置
 
 <Callout emoji="🚧">
-  This feature will be dropped in v2, in favor of SWC-based bundlers like [Parcel 2](https://parceljs.org/), [Turbopack](https://turbo.build/pack/docs), [rspack](https://rspack.dev/), [fe-farm](https://www.farmfe.org/).
+  此功能将在 v2 版本中被移除，取而代之的是基于 SWC 的打包工具，如 [Parcel 2](https://parceljs.org/)、[Turbopack](https://turbo.build/pack/docs)、[rspack](https://rspack.dev/)、[fe-farm](https://www.farmfe.org/)。
 
-Please use one of the bundlers instead.
+请使用上述打包工具之一。
 
 </Callout>
 
-SWC is able to bundle multiple JavaScript or TypeScript files into one.
+SWC 能够将多个 JavaScript 或 TypeScript 文件打包成一个文件。
 
-This feature is currently named `spack`, but will be renamed to `swcpack` in `v2`. `spack.config.js` will be deprecated for `swcpack.config.js`.
+此功能目前命名为 `spack`，但在 `v2` 中将更名为 `swcpack`。`spack.config.js` 将被废弃，改用 `swcpack.config.js`。
 
-View a [basic example of bundling](https://github.com/swc-project/pkgs/tree/main/packages/cli/examples/spack-basic).
+查看[打包的基本示例](https://github.com/swc-project/pkgs/tree/main/packages/cli/examples/spack-basic)。
 
-## Configuration
+## 配置
 
-You can configure bundling using `spack.config.js` with similar options to webpack. In the future, we are exploring a webpack compatible plugin system.
+您可以使用 `spack.config.js` 配置打包，其选项与 webpack 类似。未来，我们正在探索兼容 webpack 的插件系统。
 
 ```js filename="spack.config.js" copy
 
@@ -31,9 +31,9 @@ module.exports = {
 };
 ```
 
-> Note: CommonJS is currently required. In the future, ES Modules will be supported.
+> 注意：目前需要 CommonJS。未来将支持 ES 模块。
 
-If you want auto-completion or type checking for configuration, you can wrap the export with a `config` function from `@swc/core/spack`. It's an identity function with type annotation.
+如果您想要配置的自动完成或类型检查，可以使用 `@swc/core/spack` 中的 `config` 函数包装导出。这是一个带有类型注解的恒等函数。
 
 ```ts filename="spack.config.js" copy
 const { config } = require("@swc/core/spack");
@@ -50,21 +50,21 @@ module.exports = config({
 
 ### mode
 
-Possible values: `production`, `debug`, `none`.
+可能的值：`production`、`debug`、`none`。
 
-Currently this value is not used, but it will behave similarly to webpack.
+目前此值未被使用，但它将表现得类似于 webpack。
 
 ### entry
 
-Determines the entry of bundling. You may specify a file or a map of bundle name to file path.
+确定打包的入口。您可以指定一个文件或一个包名称到文件路径的映射。
 
-> Note: Currently this should be absolute path. You can use `__dirname` to create one.
+> 注意：目前这应该是绝对路径。您可以使用 `__dirname` 创建一个。
 >
-> In the future, SWC will support using relative paths and will resolve files relative to `spack.config.js`.
+> 未来，SWC 将支持使用相对路径，并将相对于 `spack.config.js` 解析文件。
 
 ### output
 
-You can change destination directory of the bundler using `output`.
+您可以使用 `output` 更改打包器的目标目录。
 
 ```ts filename="spack.config.js" copy
 const { config } = require("@swc/core/spack");
@@ -72,7 +72,7 @@ const { config } = require("@swc/core/spack");
 module.exports = config({
   output: {
     path: __dirname + "/lib",
-    // Name is optional.
+    // 名称是可选的。
     name: "index.js",
   },
 });
@@ -80,4 +80,4 @@ module.exports = config({
 
 ### options
 
-Used to control the behavior of SWC. This field is optional.
+用于控制 SWC 的行为。此字段是可选的。

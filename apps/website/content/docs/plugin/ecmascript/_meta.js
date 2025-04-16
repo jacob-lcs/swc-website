@@ -1,4 +1,4 @@
 export default {
-  "getting-started": "Getting started",
-  cheatsheet: "Cheatsheet",
+  "getting-started": "入门指南",
+  cheatsheet: "速查表",
 };

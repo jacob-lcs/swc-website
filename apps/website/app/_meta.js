@@ -1,19 +1,19 @@
 export default {
   index: {
-    title: "Introduction",
+    title: "介绍",
     type: "page",
     display: "hidden",
   },
   docs: {
-    title: "Docs",
+    title: "文档",
     type: "page",
   },
   playground: {
-    title: "Playground",
+    title: "在线试用",
     type: "page",
   },
   blog: {
-    title: "Blog",
+    title: "博客",
     type: "page",
   },
 };

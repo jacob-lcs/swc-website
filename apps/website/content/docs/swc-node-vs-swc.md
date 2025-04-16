@@ -1,4 +1,4 @@
-# `@swc-node/*` vs `@swc/*`
+# `@swc-node/*` 与 `@swc/*` 的区别
 
-`@swc-node` is a package that wraps `@swc/core` and supports `tsconfig.json`.
-Both packages are actively maintained.
+`@swc-node` 是一个封装了 `@swc/core` 并支持 `tsconfig.json` 的包。
+这两个包都在积极维护中。

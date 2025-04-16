@@ -2,9 +2,9 @@ import { Callout, Tabs, Tab } from 'nextra/components'
 
 # @swc/jest
 
-To make your Jest tests run faster, you can swap out the default JavaScript-based runner (`ts-jest`) for a [drop-in Rust replacement](https://github.com/swc-project/jest) using SWC.
+为了让你的 Jest 测试运行得更快，你可以使用基于 SWC 的 [Rust 替代方案](https://github.com/swc-project/jest) 来替换默认的基于 JavaScript 的运行器（`ts-jest`）。
 
-## Installation
+## 安装
 
 <Tabs items={['pnpm', 'npm', 'yarn']}>
   <Tabs.Tab>
@@ -24,9 +24,9 @@ To make your Jest tests run faster, you can swap out the default JavaScript-base
   </Tabs.Tab>
 </Tabs>
 
-## Usage
+## 使用方法
 
-Inside `jest.config.js`, configure Jest to use SWC:
+在 `jest.config.js` 中，配置 Jest 使用 SWC：
 
 ```js filename="jest.config.js" copy
 module.exports = {
@@ -36,7 +36,7 @@ module.exports = {
 }
 ```
 
-It will load the SWC configuration from `.swcrc` by default. You also can customize it:
+默认情况下，它会从 `.swcrc` 加载 SWC 配置。你也可以自定义它：
 
 ```js filename="jest.config.js" copy
 const fs = require('fs')
@@ -45,18 +45,18 @@ const config = JSON.parse(fs.readFileSync(`${__dirname}/.swcrc`, 'utf-8'))
 
 module.exports = {
   transform: {
-    '^.+\\.(t|j)sx?$': ['@swc/jest', { ...config, /* custom configuration in Jest */ }],
+    '^.+\\.(t|j)sx?$': ['@swc/jest', { ...config, /* Jest 中的自定义配置 */ }],
   },
 }
 ```
 
-## Q & A
+## 问答
 
-### Q: Jest uses CommonJS by default. But I want to use ESM
+### 问：Jest 默认使用 CommonJS。但我想使用 ESM
 
-A: Setup Jest following this [Guide](https://jestjs.io/docs/ecmascript-modules).
+答：按照这个[指南](https://jestjs.io/docs/ecmascript-modules)设置 Jest。
 
-For JavaScript, edit `package.json` as follows:
+对于 JavaScript，编辑 `package.json` 如下：
 
 ```json filename="package.json" copy
 {
@@ -65,7 +65,7 @@ For JavaScript, edit `package.json` as follows:
 }
 ```
 
-For TypeScript, edit `jest.config.js` as follows:
+对于 TypeScript，编辑 `jest.config.js` 如下：
 
 ```js filename="jest.config.js" copy
 module.exports = {
@@ -74,29 +74,29 @@ module.exports = {
 }
 ```
 
-Run test with `--experimental-vm-modules`:
+使用 `--experimental-vm-modules` 运行测试：
 
 ```sh
 cross-env NODE_OPTIONS=--experimental-vm-modules jest
 
-# or
+# 或
 node --experimental-vm-modules ./node_modules/jest/bin/jest.js
 ```
 
-### Q: What ECMAScript target is set by `jsc.target`?
+### 问：`jsc.target` 设置了什么 ECMAScript 目标？
 
-A: By default, the version supported by your Node runtime.
+答：默认情况下，是你的 Node 运行时支持的版本。
 
-| Node version | Default `jsc.target` |
-| ------------ | -------------------- |
-| 12           | 'es2018'             |
-| 13           | 'es2019'             |
-| 14           | 'es2020'             |
-| 15           | 'es2021'             |
-| 16           | 'es2021'             |
-| 17           | 'es2022'             |
+| Node 版本 | 默认 `jsc.target` |
+| --------- | ----------------- |
+| 12        | 'es2018'          |
+| 13        | 'es2019'          |
+| 14        | 'es2020'          |
+| 15        | 'es2021'          |
+| 16        | 'es2021'          |
+| 17        | 'es2022'          |
 
-You can customize this by setting an explicit version in `jest.config.js`:
+你可以在 `jest.config.js` 中设置明确的版本来自定义这一项：
 
 ```js filename="jest.config.js" copy
 module.exports = {

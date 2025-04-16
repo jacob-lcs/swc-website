@@ -7,7 +7,7 @@
     "generate": "typescript-json-schema tsconfig.json 'SwcOptions' > public/schema.json",
     "build": "pnpm run generate && next build --turbopack",
     "postbuild": "pagefind --site .next/server/app --output-path public/_pagefind",
-    "start": "next start"
+    "start": "next start -p 3001"
   },
   "dependencies": {
     "@reach/skip-nav": "^0.16.0",

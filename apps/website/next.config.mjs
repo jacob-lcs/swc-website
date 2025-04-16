@@ -3,6 +3,9 @@ import nextra from "nextra";
 const withNextra = nextra({});
 
 export default withNextra({
+  serverRuntimeConfig: {
+    port: 3001,
+  },
   redirects: () => {
     return [
       {

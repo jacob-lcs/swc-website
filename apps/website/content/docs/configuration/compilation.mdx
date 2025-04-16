@@ -1,7 +1,7 @@
 import { Callout } from 'nextra/components'
 
 <Callout>
-SWC provides an official JSON Schema for the configuration file.
+SWC 为配置文件提供了官方 JSON Schema。
 
 ```json filename=".swcrc" copy
 {
@@ -11,9 +11,9 @@ SWC provides an official JSON Schema for the configuration file.
 
 </Callout>
 
-# Compilation
+# 编译
 
-Compilation works out of the box with SWC and does not require customization. Optionally, you can override the configuration. Here are the defaults:
+SWC 的编译功能开箱即用，无需自定义配置。当然，您也可以选择覆盖默认配置。以下是默认配置：
 
 ```json filename=".swcrc" copy
 {
@@ -36,7 +36,7 @@ Compilation works out of the box with SWC and does not require customization. Op
     "target": "es5",
     "loose": false,
     "externalHelpers": false,
-    // Requires v1.2.50 or upper and requires target to be es2016 or upper.
+    // 需要 v1.2.50 或更高版本，并且 target 需要设置为 es2016 或更高版本。
     "keepClassNames": false
   },
   "isModule": false
@@ -45,23 +45,22 @@ Compilation works out of the box with SWC and does not require customization. Op
 
 ## env
 
-SWC has an alternative for `preset-env`.
-You can
+SWC 提供了 `preset-env` 的替代方案。
+您可以通过 `env` 配置项来：
 
-- Set target browsers
-- Use `browserslist`
-- Control transforms
+- 设置目标浏览器
+- 使用 `browserslist`
+- 控制转换
 
-with `env` entry.
-Note that this does not work with `jsc.target`.
+请注意，这与 `jsc.target` 不兼容。
 
 ### `env.targets`
 
-Possible values:
+可能的值：
 
-- Query: `string`
+- 查询语句：`string`
 
-Example:
+示例：
 
 ```json filename=".swcrc" copy
 {
@@ -79,11 +78,11 @@ Example:
 
 ```
 
-- Queries: `string[]`
+- 多个查询语句：`string[]`
 
-- Version per browser: `Map<String, Version>`
+- 按浏览器版本设置：`Map<String, Version>`
 
-Example of targeting `chrome 79`.
+以下是针对 `chrome 79` 的示例：
 
 ```json filename=".swcrc" copy
 {
@@ -97,41 +96,41 @@ Example of targeting `chrome 79`.
 
 ### `env.mode`
 
-Optional.
-Possible values: `"usage" | "entry" | false`, defaults to `false`.
+可选项。
+可能的值：`"usage" | "entry" | false`，默认为 `false`。
 
 ### `env.debug`
 
-Optional.
-Type: Bool
+可选项。
+类型：Bool
 
-Enable debug logging.
+启用调试日志。
 
 ### `env.dynamicImport`
 
-Optional.
-Type: Bool
+可选项。
+类型：Bool
 
 ### `env.loose`
 
-Optional.
-Type: Bool
+可选项。
+类型：Bool
 
-Enable loose mode. See [jsc.loose](#jscloose) also.
+启用松散模式。另请参见 [jsc.loose](#jscloose)。
 
 ### `env.skip`
 
-Optional.
-Type: `string[]`
+可选项。
+类型：`string[]`
 
 ### `env.include`
 
-Optional.
-Type: `string[]`
+可选项。
+类型：`string[]`
 
-Feature or module to include.
+要包含的特性或模块。
 
-Example of enabling `async`/`yield` transform while targeting chrome 79.
+以下是在目标为 chrome 79 时启用 `async`/`yield` 转换的示例：
 
 ```json filename=".swcrc" copy
 {
@@ -149,15 +148,15 @@ Example of enabling `async`/`yield` transform while targeting chrome 79.
 
 ### `env.exclude`
 
-Optional.
-Type: `string[]`
+可选项。
+类型：`string[]`
 
-Feature or module to exclude.
+要排除的特性或模块。
 
 ### `env.coreJs`
 
-Optional.
-Type: `string`
+可选项。
+类型：`string`
 
 ```json filename=".swcrc" copy
 {
@@ -176,25 +175,25 @@ Type: `string`
 
 ### `env.path`
 
-Optional.
-Currently noop.
+可选项。
+目前无操作。
 
 ### `env.shippedProposals`
 
-Optional.
-Type: Bool
+可选项。
+类型：Bool
 
 ### `env.forceAllTransforms`
 
-Optional.
-Type: Bool
+可选项。
+类型：Bool
 
 ### `env.bugfixes`
 
-Optional.
-Type: Bool
+可选项。
+类型：Bool
 
-Enable bugfix passes.
+启用错误修复转换。
 
 ## jsc.externalHelpers
 
@@ -206,13 +205,13 @@ Enable bugfix passes.
 }
 ```
 
-The output code may depend on helper functions to support the target environment. By default, a helper function is inlined into the output files where it is required.
+输出代码可能依赖于辅助函数来支持目标环境。默认情况下，所需的辅助函数会被内联到输出文件中。
 
-You can use helpers from an external module by enabling `externalHelpers` and the helpers code will be imported by the output files from `node_modules/@swc/helpers`.
+通过启用 `externalHelpers`，您可以使用外部模块中的辅助函数，输出文件将从 `node_modules/@swc/helpers` 导入这些辅助代码。
 
-While bundling, this option will greatly reduce your file size.
+在打包过程中，这个选项将大大减小文件大小。
 
-You must add `@swc/helpers` as a dependency in addition to `@swc/core`.
+您必须添加 `@swc/helpers` 作为依赖，同时还需要 `@swc/core`。
 
 ## jsc.parser
 
@@ -255,12 +254,12 @@ You must add `@swc/helpers` as a dependency in addition to `@swc/core`.
 
 ## jsc.target
 
-Starting from `@swc/core` v1.0.27, you can specify the target environment by using the field.
+从 `@swc/core` v1.0.27 开始，您可以使用此字段指定目标环境。
 
 ```json filename=".swcrc" copy
 {
   "jsc": {
-    // Disable es3 / es5 / es2015 transforms
+    // 禁用 es3 / es5 / es2015 转换
     "target": "es2016"
   }
 }
@@ -268,10 +267,10 @@ Starting from `@swc/core` v1.0.27, you can specify the target environment by usi
 
 ## jsc.loose
 
-Starting from `@swc/core` v1.1.4, you can enable "loose" transformations by enabling `jsc.loose` which works like `babel-preset-env` [loose mode](https://2ality.com/2015/12/babel6-loose-mode.html).
+从 `@swc/core` v1.1.4 开始，您可以通过启用 `jsc.loose` 来启用"松散"转换，其工作方式类似于 `babel-preset-env` 的[松散模式](https://2ality.com/2015/12/babel6-loose-mode.html)。
 
 <Callout emoji="⚠️">
-  These [assumptions](https://babeljs.io/docs/assumptions) are made in loose mode by default, you might get unexpected reault if your code doesn't meet these assumptions.
+  松散模式默认做出以下[假设](https://babeljs.io/docs/assumptions)，如果您的代码不符合这些假设，可能会得到意外结果。
   - [privateFieldsAsProperties](https://babeljs.io/docs/assumptions#privatefieldsasproperties)
   - [setPublicClassFields](https://babeljs.io/docs/assumptions#setpublicclassfields)
   - [constantSuper](https://babeljs.io/docs/assumptions#constantsuper)
@@ -324,7 +323,7 @@ Starting from `@swc/core` v1.1.4, you can enable "loose" transformations by enab
 
 ### jsc.transform.legacyDecorator
 
-You can use the legacy (stage 1) class decorators syntax and behavior.
+您可以使用传统的（stage 1）类装饰器语法和行为。
 
 ```json filename=".swcrc" copy
 {
@@ -342,9 +341,9 @@ You can use the legacy (stage 1) class decorators syntax and behavior.
 
 ### jsc.transform.decoratorMetadata
 
-This feature requires `v1.2.13+`.
+此功能需要 `v1.2.13+`。
 
-If you are using typescript and decorators with `emitDecoratorMetadata` enabled, you can use `swc` for faster iteration:
+如果您使用启用了 `emitDecoratorMetadata` 的 typescript 和装饰器，可以使用 `swc` 加快迭代速度：
 
 ```json filename=".swcrc" copy
 {
@@ -365,53 +364,53 @@ If you are using typescript and decorators with `emitDecoratorMetadata` enabled,
 
 #### jsc.transform.react.runtime
 
-Possible values: `automatic`, `classic`. This affects how JSX source code will be compiled.
+可能的值：`automatic`、`classic`。这会影响 JSX 源代码的编译方式。
 
-- Defauts to `classic`.
-- Use `runtime: automatic` to use a JSX runtime module (e.g. `react/jsx-runtime` introduced in React 17).
-- Use `runtime: classic` to use `React.createElement` instead - with this option, you must ensure that `React` is in scope when using JSX.
+- 默认为 `classic`。
+- 使用 `runtime: automatic` 可以使用 JSX 运行时模块（例如 React 17 中引入的 `react/jsx-runtime`）。
+- 使用 `runtime: classic` 则使用 `React.createElement` - 使用此选项时，您必须确保在使用 JSX 时 `React` 在作用域内。
 
-[Learn more here](https://reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html).
+[在此了解更多](https://reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html)。
 
 #### jsc.transform.react.importSource
 
-- Defaults to `react`.
-- When using `runtime: automatic`, determines the runtime library to import.
-- This option can be overrided with `@jsxImportSource foo`.
+- 默认为 `react`。
+- 使用 `runtime: automatic` 时，确定要导入的运行时库。
+- 此选项可通过 `@jsxImportSource foo` 覆盖。
 
 #### jsc.transform.react.pragma
 
-- Defaults to `React.createElement`.
-- When using `runtime: classic`, replaces the function used when compiling JSX expressions.
-- This option can be overrided with `@jsx foo`.
+- 默认为 `React.createElement`。
+- 使用 `runtime: classic` 时，替换编译 JSX 表达式时使用的函数。
+- 此选项可通过 `@jsx foo` 覆盖。
 
 #### jsc.transform.react.pragmaFrag
 
-- Defaults to `React.Fragment`
-- Replace the component used when compiling JSX fragments.
-- This option can be overrided with `@jsxFrag foo`.
+- 默认为 `React.Fragment`
+- 替换编译 JSX 片段时使用的组件。
+- 此选项可通过 `@jsxFrag foo` 覆盖。
 
 #### jsc.transform.react.throwIfNamespace
 
-Toggles whether or not to throw an error if an XML namespaced tag name is used. For example: `<f:image />`
+切换在使用 XML 命名空间标签名称时是否抛出错误。例如：`<f:image />`
 
-Though the JSX spec allows this, it is disabled by default since React's JSX does not currently have support for it.
+虽然 JSX 规范允许这样做，但由于 React 的 JSX 目前不支持此功能，因此默认禁用。
 
 #### jsc.transform.react.development
 
-Toggles debug props `__self` and `__source` on elements generated from JSX, which are used by development tooling such as React Developer Tools.
+在 JSX 生成的元素上切换调试属性 `__self` 和 `__source`，这些属性用于 React 开发者工具等开发工具。
 
-This option is set automatically based on the Webpack `mode` setting when used with `swc-loader`. See [Using swc with webpack](/docs/usage-swc-loader/).
+当与 `swc-loader` 一起使用时，此选项会根据 Webpack 的 `mode` 设置自动设置。请参阅[将 swc 与 webpack 一起使用](/docs/usage-swc-loader/)。
 
 #### jsc.transform.react.useBuiltins
 
-Use `Object.assign()` instead of `_extends`. Defaults to false.
+使用 `Object.assign()` 代替 `_extends`。默认为 false。
 
 #### jsc.transform.react.refresh
 
-Enable [react-refresh](https://www.npmjs.com/package/react-refresh) related transform. Defaults to `false` as it's considered experimental.
+启用 [react-refresh](https://www.npmjs.com/package/react-refresh) 相关转换。默认为 `false`，因为它被视为实验性功能。
 
-Pass `refresh: true` to enable this feature, or an object with the following:
+传递 `refresh: true` 启用此功能，或者传递具有以下内容的对象：
 
 ```ts
 interface ReactRefreshConfig {
@@ -443,7 +442,7 @@ interface ReactRefreshConfig {
 }
 ```
 
-Then, source code like:
+然后，像这样的源代码：
 
 ```js filename="source.js"
 import { DEBUG } from "@ember/env-flags";
@@ -452,7 +451,7 @@ import { FEATURE_A, FEATURE_B } from "@ember/features";
 console.log(DEBUG, FEATURE_A, FEATURE_B);
 ```
 
-is transformed to:
+将转换为：
 
 ```js filename="output.js"
 console.log(true, false, true);
@@ -460,22 +459,22 @@ console.log(true, false, true);
 
 ### jsc.transform.optimizer
 
-The SWC optimizier assumes:
+SWC 优化器假设：
 
-- It's a module or wrapped in an iife.
-- Accessing (get) global variables does not have a side-effect. It is the same assumption as the google closure compiler.
-- You don't add fields to literals like a numeric literal, regular expression or a string literal.
-- Files are served as gzipped.
+- 代码是模块或包装在 IIFE 中。
+- 访问（获取）全局变量没有副作用。这与 Google Closure Compiler 的假设相同。
+- 您不会向数字字面量、正则表达式或字符串字面量添加字段。
+- 文件以 gzip 格式提供。
 
-SWC will not focus on reducing the size of non-gzipped file size.
+SWC 不会专注于减小非 gzip 压缩的文件大小。
 
-Setting this to `undefined` skips optimizer pass.
+将此设置为 `undefined` 将跳过优化器传递。
 
 #### jsc.transform.optimizer.simplify
 
-> Requires `v1.2.101+`
+> 需要 `v1.2.101+`
 
-You can set this to `false` to use `inline_globals` while skipping optimizations.
+您可以将此设置为 `false` 以使用 `inline_globals` 同时跳过优化。
 
 ```json filename=".swcrc" copy
 {
@@ -496,10 +495,10 @@ You can set this to `false` to use `inline_globals` while skipping optimizations
 
 #### jsc.transform.optimizer.globals
 
-> Requires `v1.2.101+`
+> 需要 `v1.2.101+`
 
-- `vars` - Variables to inline.
-- `typeofs` - If you set `{ "window": "object" }`, `typeof window` will be replaced with `"object"`.
+- `vars` - 要内联的变量。
+- `typeofs` - 如果设置 `{ "window": "object" }`，`typeof window` 将被替换为 `"object"`。
 
 ```json filename=".swcrc" copy
 {
@@ -517,13 +516,13 @@ You can set this to `false` to use `inline_globals` while skipping optimizations
 }
 ```
 
-Then, you can use it like `npx swc '__DEBUG__' --filename input.js`.
+然后，您可以像这样使用它：`npx swc '__DEBUG__' --filename input.js`。
 
 #### jsc.transform.optimizer.jsonify
 
-> Requires `v1.1.1+`
+> 需要 `v1.1.1+`
 
-- `minCost` - If cost of parsing a pure object literal is larger than this value, the object literal is converted to `JSON.parse('{"foo": "bar"}')`. Defaults to 1024.
+- `minCost` - 如果解析纯对象字面量的成本大于此值，则对象字面量将转换为 `JSON.parse('{"foo": "bar"}')`. 默认为 1024。
 
 ```json filename=".swcrc" copy
 {
@@ -539,46 +538,46 @@ Then, you can use it like `npx swc '__DEBUG__' --filename input.js`.
 }
 ```
 
-This will change all **pure** object literals to `JSON.parse("")`.
+这将把所有**纯**对象字面量更改为 `JSON.parse("")`。
 
 ## jsc.keepClassNames
 
-> Requires `v1.2.50+` and target to be es2016 or higher
+> 需要 `v1.2.50+` 且 target 为 es2016 或更高版本
 
-Enabling this option will make swc preserve original class names.
+启用此选项将使 swc 保留原始类名。
 
 ## jsc.paths
 
-> Requires `v1.2.62+`
+> 需要 `v1.2.62+`
 
-Syntax is identical as it of `tsconfig.json`: [learn more](https://www.typescriptlang.org/docs/handbook/module-resolution.html#path-mapping).
+语法与 `tsconfig.json` 相同：[了解更多](https://www.typescriptlang.org/docs/handbook/module-resolution.html#path-mapping)。
 
-Requires `jsc.baseUrl`. See below.
+需要设置 `jsc.baseUrl`。请参见下文。
 
 ## jsc.baseUrl
 
-The path must be specified as an absolute path.
+路径必须指定为绝对路径。
 
-[Learn more](https://www.typescriptlang.org/docs/handbook/module-resolution.html#base-url).
+[了解更多](https://www.typescriptlang.org/docs/handbook/module-resolution.html#base-url)。
 
 ## jsc.minify
 
-> Requires `v1.2.67+`
+> 需要 `v1.2.67+`
 
-See [the documentation for minification](/docs/configuration/minification) for more details.
+有关更多详情，请参阅[代码压缩文档](/docs/configuration/minification)。
 
 ## jsc.experimental
 
 ### jsc.experimental.keepImportAttributes
 
-Preserve import attributes.
-This is experimental because import attributes are not covered by ecmascript specifications yet.
+保留导入属性。
+这是实验性的，因为导入属性尚未被 ECMAScript 规范覆盖。
 
 ### jsc.experimental.plugins
 
-It follows resolving rule of node.js,.
+遵循 node.js 的解析规则。
 
-Specify the plugin name like
+按如下方式指定插件名称：
 
 ```json filename=".swcrc" copy
 {
@@ -592,13 +591,13 @@ Specify the plugin name like
 }
 ```
 
-`styled-jsx` works because it's published as `@swc/plugin-styled-jsx`.
+`styled-jsx` 有效是因为它以 `@swc/plugin-styled-jsx` 的名称发布。
 
 ### jsc.experimental.cacheRoot
 
-Specify the location where SWC stores its intermediate cache files.
+指定 SWC 存储其中间缓存文件的位置。
 
-Currently only transform plugin uses this. If not specified, SWC will create `.swc` directories.
+目前只有转换插件使用此功能。如果未指定，SWC 将创建 `.swc` 目录。
 
 ```json filename=".swcrc" copy
 {
@@ -612,16 +611,14 @@ Currently only transform plugin uses this. If not specified, SWC will create `.s
 
 ## jsc.preserveAllComments
 
-Indicate that all comments should be preserved during compilation. Comments from source may be shifted in order to preserve thier relative location from source
-to compiled output.
-This feature is useful for transpilation that requires comments remain relatively close to the source: e.g. files under test with istanbul-ignore coverage
-annotations.
+指示在编译过程中应保留所有注释。源代码中的注释可能会被移动，以便在从源代码到编译输出的过程中保持其相对位置。
+此功能对于需要保持注释相对靠近源代码的转译非常有用：例如带有 istanbul-ignore 覆盖注解的测试文件。
 
 ## jsc.transform.useDefineForClassFields
 
-Possilbe values:
+可能的值：
 
-- `true`:
+- `true`：
 
 ```js
 class Foo {
@@ -631,7 +628,7 @@ class Foo {
 console.log(Foo.init)
 ```
 
-will be compiled as
+将被编译为：
 
 ```js
 class Foo {
@@ -643,7 +640,7 @@ class Foo {
 console.log(Foo.init);
 ```
 
-- `false`:
+- `false`：
 
 ```js
 class Foo {
@@ -653,7 +650,7 @@ class Foo {
 console.log(Foo.init)
 ```
 
-will be compiled as
+将被编译为：
 
 ```js
 class Foo {
@@ -666,7 +663,7 @@ console.log(Foo.init);
 
 ## jsc.transform.decoratorVersion
 
-Starting from `v1.3.47`, you can use stage 3 decorator.
+从 `v1.3.47` 开始，您可以使用 stage 3 装饰器。
 
 ```json filename=".swcrc" copy
 {
@@ -682,27 +679,27 @@ Starting from `v1.3.47`, you can use stage 3 decorator.
 }
 ```
 
-Possible values:
+可能的值：
 
-- `"2021-12"` (default)
+- `"2021-12"` (默认)
 
-Legacy decorator.
+传统装饰器。
 
 - `"2022-03"`
 
-Stage 3 decorator.
+Stage 3 装饰器。
 
 ### jsc.output
 
 #### jsc.output.charset
 
-Possible values: `utf8`, `ascii`.
+可能的值：`utf8`、`ascii`。
 
-This can be used to keep the output ascii-only.
+这可用于保持输出仅使用 ASCII 字符。
 
-## Multiple Entries
+## 多入口配置
 
-> Requires `v1.0.47+`
+> 需要 `v1.0.47+`
 
 ```json
 [
@@ -721,9 +718,9 @@ This can be used to keep the output ascii-only.
 ]
 ```
 
-This makes SWC compile JavaScript files as CommonJS modules and compile TypeScript files as AMD modules.
+这使 SWC 将 JavaScript 文件编译为 CommonJS 模块，将 TypeScript 文件编译为 AMD 模块。
 
-Note that `test` option can be used to transcompile only typescript files, like
+注意，`test` 选项可用于仅转译 TypeScript 文件，例如：
 
 ```json filename=".swcrc" copy
 {
@@ -741,7 +738,7 @@ Note that `test` option can be used to transcompile only typescript files, like
 
 ## test
 
-Type: `Regex / Regex[]`
+类型：`Regex / Regex[]`
 
 ```json filename=".swcrc" copy
 {
@@ -759,7 +756,7 @@ Type: `Regex / Regex[]`
 
 ## exclude
 
-Type: `Regex / Regex[]`
+类型：`Regex / Regex[]`
 
 ```json filename=".swcrc" copy
 {
@@ -777,9 +774,9 @@ Type: `Regex / Regex[]`
 
 ## sourceMaps
 
-> Requires `v1.2.50+`
+> 需要 `v1.2.50+`
 
-Enable source map by adding `sourceMaps: true` or `sourceMaps: 'inline'` to the `.swcrc`.
+通过在 `.swcrc` 中添加 `sourceMaps: true` 或 `sourceMaps: 'inline'` 启用源映射。
 
 ```json filename=".swcrc" copy
 {
@@ -789,9 +786,9 @@ Enable source map by adding `sourceMaps: true` or `sourceMaps: 'inline'` to the 
 
 ## inlineSourcesContent
 
-> Requires `v1.2.101+`
+> 需要 `v1.2.101+`
 
-Defaults to `true`. If you want to make `swc` store contents of files into sourcemap, you can set `inlineSourcesContent` to `true`.
+默认为 `true`。如果您希望 `swc` 将文件内容存储到源映射中，可以将 `inlineSourcesContent` 设置为 `true`。
 
 ```json filename=".swcrc" copy
 {
@@ -802,7 +799,7 @@ Defaults to `true`. If you want to make `swc` store contents of files into sourc
 
 ## isModule
 
-Possible values: `true`, `false`, `"unknown"`
+可能的值：`true`、`false`、`"unknown"`
 
-Used to treat input as a module or script.
-If this is set to `unknown`, it will be `Module` if it's esm and `Script` otherwise.
+用于将输入视为模块或脚本。
+如果设置为 `unknown`，则当它是 ESM 时为 `Module`，否则为 `Script`。

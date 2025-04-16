@@ -1,7 +1,7 @@
 import { Callout } from 'nextra/components'
 
 <Callout>
-SWC provides an official JSON Schema for the configuration file.
+SWC 为配置文件提供了官方 JSON Schema。
 
 ```json filename=".swcrc" copy
 {
@@ -11,13 +11,13 @@ SWC provides an official JSON Schema for the configuration file.
 
 </Callout>
 
-# Configuring SWC
+# 配置 SWC
 
-SWC can be configured with an `.swcrc` file.
+SWC 可以通过 `.swcrc` 文件进行配置。
 
-## Compilation
+## 编译
 
-Compilation works out of the box with SWC and does not require customization. Optionally, you can override the configuration. Here are the defaults:
+SWC 的编译功能开箱即用，无需自定义配置。当然，您也可以选择覆盖默认配置。以下是默认配置：
 
 ```jsonc filename=".swcrc" copy
 {
@@ -40,22 +40,22 @@ Compilation works out of the box with SWC and does not require customization. Op
     "target": "es5",
     "loose": false,
     "externalHelpers": false,
-    // Requires v1.2.50 or upper and requires target to be es2016 or upper.
+    // 需要 v1.2.50 或更高版本，并且 target 需要设置为 es2016 或更高版本。
     "keepClassNames": false
   },
   "minify": false
 }
 ```
 
-Read more about [configuring compilation](/docs/configuration/compilation).
+了解更多关于[配置编译](/docs/configuration/compilation)的信息。
 
-## Supported Browsers
+## 支持的浏览器
 
-Starting with `v1.1.10`, you can now use `browserslist` to automatically configure supported browsers.
+从 `v1.1.10` 开始，您可以使用 `browserslist` 自动配置支持的浏览器。
 
-### Usage
+### 使用方法
 
-First, install `browserslist`. Then, update your `.swcrc`:
+首先，安装 `browserslist`。然后，更新您的 `.swcrc`：
 
 ```json filename=".swcrc" copy
 {
@@ -69,15 +69,15 @@ First, install `browserslist`. Then, update your `.swcrc`:
 }
 ```
 
-Read more about [configuring supported browsers](/docs/configuration/supported-browsers).
+了解更多关于[配置支持的浏览器](/docs/configuration/supported-browsers)的信息。
 
-## Modules
+## 模块
 
-Read more about [configuring modules](/docs/configuration/modules).
+了解更多关于[配置模块](/docs/configuration/modules)的信息。
 
-## Minification
+## 代码压缩
 
-Starting with `v1.2.67`, you can configure SWC to minify your code by enabling `minify` in your `.swcrc` file:
+从 `v1.2.67` 开始，您可以通过在 `.swcrc` 文件中启用 `minify` 选项来配置 SWC 压缩代码：
 
 ```json filename=".swcrc" copy
 {
@@ -85,4 +85,4 @@ Starting with `v1.2.67`, you can configure SWC to minify your code by enabling `
 }
 ```
 
-Read more about [configuring the JavaScript minifier](/docs/configuration/minification).
+了解更多关于[配置 JavaScript 压缩器](/docs/configuration/minification)的信息。

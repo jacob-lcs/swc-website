@@ -1,5 +1,5 @@
 export default {
-  "selecting-swc-core": "Selecting swc_core",
+  "selecting-swc-core": "选择 swc_core",
   ecmascript: "ECMAScript",
-  publishing: "Publishing",
+  publishing: "发布",
 };

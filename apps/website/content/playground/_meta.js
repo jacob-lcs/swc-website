@@ -1,5 +1,5 @@
 export default {
   index: {
-    title: "Try SWC",
+    title: "尝试 SWC",
   },
 };

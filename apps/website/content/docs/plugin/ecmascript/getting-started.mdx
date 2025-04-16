@@ -1,96 +1,96 @@
 import { Callout } from 'nextra/components'
 
-# Implementing a plugin
+# 实现插件
 
-## Important API Changes
+## 重要 API 变更
 
 <Callout type="warning">
-Recent API changes that may affect your plugin development:
+可能影响您插件开发的近期 API 变更：
 
-- Replace `chain!` macro with tuples: Use `(` instead of `chain!(`. You can replace all `chain!(` with `(` using IDE features.
-- For `chain!` with 13+ arguments: Use nested tuples for items after the 13th element.
-- Replace `-> impl Fold` with `-> impl Pass` in general.
-- `as_folder` is now `visit_mut_pass` and returns `impl VisitMut + Pass` instead of `impl VisitMut + Fold`.
-- Use `Program.apply` and `Program.mutate` to apply Pass to program:
+- 用元组替换 `chain!` 宏：使用 `(` 代替 `chain!(`。您可以使用 IDE 功能将所有 `chain!(` 替换为 `(`。
+- 对于具有 13+ 参数的 `chain!`：为第 13 个元素之后的项使用嵌套元组。
+- 通常情况下，将 `-> impl Fold` 替换为 `-> impl Pass`。
+- `as_folder` 现在是 `visit_mut_pass`，返回 `impl VisitMut + Pass` 而不是 `impl VisitMut + Fold`。
+- 使用 `Program.apply` 和 `Program.mutate` 将 Pass 应用到程序：
   - `fn apply(self, impl Pass) -> Self`
   - `fn mutate(&mut self, impl Pass)`
-- Replace `noop()` with `noop_pass()`. The new function lives in `swc_ecma_ast` and is a real noop function.
+- 用 `noop_pass()` 替换 `noop()`。新函数位于 `swc_ecma_ast` 中，是一个真正的空操作函数。
 
 </Callout>
 
-## Setup environment
+## 设置环境
 
-### Install required toolchain
+### 安装所需工具链
 
-As plugin is written in the rust programming language and built as a `.wasm` file, you need to install rust toolchain and wasm target.
+由于插件是用 Rust 编程语言编写并构建为 `.wasm` 文件，您需要安装 Rust 工具链和 Wasm 目标。
 
-#### Install rust
+#### 安装 Rust
 
-You can follow instructions at ['Install Rust' page from the official rust website](https://www.rust-lang.org/tools/install)
+您可以按照[官方 Rust 网站上的"安装 Rust"页面](https://www.rust-lang.org/tools/install)的说明进行操作
 
-#### Add wasm target to rust
+#### 将 Wasm 目标添加到 Rust
 
-SWC supports two kinds of `.wasm` files.
-Those are
+SWC 支持两种 `.wasm` 文件。
+它们是：
 
 - wasm32-wasip1
 - wasm32-unknown-unknown
 
-In this guide, we will use `wasm-wasip1` as a target.
+在本指南中，我们将使用 `wasm-wasip1` 作为目标。
 
-#### Install `swc_cli`
+#### 安装 `swc_cli`
 
-You can install a rust-based CLI for SWC by doing
+您可以通过以下方式安装基于 Rust 的 SWC CLI：
 
 ```sh
 cargo install swc_cli
 ```
 
-#### Configuring IDE
+#### 配置 IDE
 
-If you are going to use vscode, it's recommended to install `rust-analyzer` extension.
-`rust-analyzer` is a [language server](https://microsoft.github.io/language-server-protocol/) for the rust programming language, which provides good features for code completion, code navigation, and code analysis.
+如果您要使用 VSCode，建议安装 `rust-analyzer` 扩展。
+`rust-analyzer` 是 Rust 编程语言的[语言服务器](https://microsoft.github.io/language-server-protocol/)，提供代码补全、代码导航和代码分析等优秀功能。
 
-## Implementing simple plugin
+## 实现简单插件
 
-### Create a project
+### 创建项目
 
-SWC CLI supports creating a new plugin project.
+SWC CLI 支持创建新的插件项目。
 
-Run
+运行
 
 ```sh
 swc plugin new --target-type wasm32-wasip1 my-first-plugin
-# You should to run this
+# 您应该运行这个
 rustup target add wasm32-wasip1
 ```
 
-to create a new plugin, and open `my-first-plugin` with your preferred rust IDE.
+来创建新插件，并用您喜欢的 Rust IDE 打开 `my-first-plugin`。
 
-### Implementing a visitor
+### 实现访问器
 
-The generated code has
+生成的代码包含
 
 ```rust
 impl VisitMut for TransformVisitor {
-    // Implement necessary visit_mut_* methods for actual custom transform.
-    // A comprehensive list of possible visitor methods can be found here:
+    // 为实际的自定义转换实现必要的 visit_mut_* 方法。
+    // 可能的访问器方法的完整列表可以在这里找到：
     // https://rustdoc.swc.rs/swc_ecma_visit/trait.VisitMut.html
 }
 ```
 
-which is used to transform code.
-[The trait `VisitMut`](https://rustdoc.swc.rs/swc_ecma_visit/trait.VisitMut.html) supports mutating AST nodes, and as it supports all AST types, it has lots of methods.
+这用于转换代码。
+[`VisitMut` trait](https://rustdoc.swc.rs/swc_ecma_visit/trait.VisitMut.html) 支持修改 AST 节点，并且由于它支持所有 AST 类型，它有很多方法。
 
 ---
 
-We will use
+我们将使用
 
 ```js
 foo === bar;
 ```
 
-as the input. From [the SWC Playground](https://play.swc.rs), you can get actual representation of this code.
+作为输入。从 [SWC Playground](https://play.swc.rs) 可以获取此代码的实际表示。
 
 ```json
 {
@@ -143,8 +143,8 @@ as the input. From [the SWC Playground](https://play.swc.rs), you can get actual
 }
 ```
 
-Let's implement a method for `BinExpr`.
-You can do it like
+让我们为 `BinExpr` 实现一个方法。
+您可以这样做：
 
 ```rust
 use swc_core::{
@@ -159,10 +159,10 @@ impl VisitMut for TransformVisitor {
 }
 ```
 
-Note that `visit_mut_children_with` is required if you want to call the method handler for children.
-e.g. `visit_mut_ident` for `foo` and `bar` will be called by `e.visit_mut_children_with(self);` above.
+请注意，如果您想为子元素调用方法处理器，`visit_mut_children_with` 是必需的。
+例如，上面的 `e.visit_mut_children_with(self);` 将调用 `foo` 和 `bar` 的 `visit_mut_ident`。
 
-Let's narrow down it using the binary operator.
+让我们使用二元运算符进一步缩小范围。
 
 ```rust
 use swc_core::{
@@ -182,22 +182,22 @@ impl VisitMut for TransformVisitor {
 }
 ```
 
-`op!("===")` is a macro call, and it returns various types of operators.
-It returns [BinaryOp](https://rustdoc.swc.rs/swc_ecma_ast/enum.BinaryOp.html) in this case, because we provided `"==="`, which is a binary operator.
-See [the rustdoc for op! macro](https://rustdoc.swc.rs/swc_ecma_ast/macro.op.html) for more details.
+`op!("===")` 是一个宏调用，它返回各种类型的运算符。
+在这种情况下，它返回 [BinaryOp](https://rustdoc.swc.rs/swc_ecma_ast/enum.BinaryOp.html)，因为我们提供了二元运算符 `"==="`。
+有关更多详细信息，请参阅 [op! 宏的 rustdoc](https://rustdoc.swc.rs/swc_ecma_ast/macro.op.html)。
 
-If we run this plugin, we will get
+如果我们运行这个插件，我们将得到
 
 ```js
 kdy1 === bar;
 ```
 
-## Testing your transform
+## 测试您的转换
 
-You can simply run `cargo test` to test your plugins.
-SWC also provides a utility to ease fixture testing.
+您可以简单地运行 `cargo test` 来测试您的插件。
+SWC 还提供了一个工具来简化测试。
 
-You can easily verify the input and output of the transform.
+您可以轻松验证转换的输入和输出。
 
 ```rust
 test!(

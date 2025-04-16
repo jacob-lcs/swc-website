@@ -1,26 +1,26 @@
-## Steps to extract the inputs to the SWC minifier.
+## SWC 压缩器输入提取步骤
 
-### Step 1. Clone the SWC repository
+### 步骤 1. 克隆 SWC 仓库
 
-You would need to clone the SWC repository to your local machine, and invoke a script in the repository from the project root of your next.js app.
-So in this example, we will assume that the link above is cloned to `~/projects/swc`.
+您需要将 SWC 仓库克隆到本地机器，并从 Next.js 应用程序的项目根目录调用仓库中的脚本。
+在本示例中，我们假设上述链接已克隆到 `~/projects/swc`。
 
 ```bash
 git clone https://github.com/swc-project/swc.git ~/projects/swc
 ```
 
-### Step 2. Do everything except the `next build` step.
+### 步骤 2. 执行除 `next build` 外的所有步骤
 
-This depends on your project.
-You should install all the dependencies, run the dependency tasks for your next.js app, like the ones invoked automatically by monorepo management tools like `turbo`.
+这取决于您的项目。
+您应该安装所有依赖项，为 Next.js 应用运行依赖任务，例如 `turbo` 等单体仓库管理工具自动调用的那些任务。
 
-### Step 3. Invoke the script
+### 步骤 3. 调用脚本
 
 ```bash
 ~/projects/swc/crates/swc_ecma_minifier/scripts/next/add-test.sh
 ```
 
-This will run the `next build` step, and it will copy all inputs to the SWC minifier into test directory of your SWC clone.
-You can move those files to your minifier inputs directory.
+这将运行 `next build` 步骤，并将所有 SWC 压缩器的输入复制到您的 SWC 克隆的测试目录中。
+您可以将这些文件移动到您的压缩器输入目录。
 
-The lead maintainer (@kdy1) maintains a repository for the minifier inputs at https://github.com/kdy1/swc-minifier-inputs to profile the performance of the minifier.
+项目主要维护者 (@kdy1) 在 https://github.com/kdy1/swc-minifier-inputs 维护了一个压缩器输入的仓库，用于分析压缩器的性能。

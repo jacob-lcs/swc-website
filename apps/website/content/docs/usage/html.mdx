@@ -1,7 +1,7 @@
 import { Callout, Tabs, Tab } from 'nextra/components'
 import TypeDeclarations from 'components/TypeDeclarations'
 
-## Installation
+## 安装
 
 <Tabs items={['pnpm', 'npm', 'yarn']}>
   <Tabs.Tab>
@@ -21,11 +21,11 @@ import TypeDeclarations from 'components/TypeDeclarations'
   </Tabs.Tab>
 </Tabs>
 
-## Usage
+## 使用方法
 
 ### `minify()` / `minifySync()`
 
-If you are minifying a whole HTML document, you can use the `minify()` function.
+如果你要压缩整个 HTML 文档，可以使用 `minify()` 函数。
 
 ```typescript
 import { minify } from '@swc/html';
@@ -37,7 +37,7 @@ const html = await minify('<div>Hello, world!</div>', {
 
 ### `minifyFragment()` / `minifyFragmentSync()`
 
-If you are minifying a fragment of HTML, you can use the `minifyFragment()` function.
+如果你要压缩 HTML 片段，可以使用 `minifyFragment()` 函数。
 
 ```typescript
 import { minifyFragment } from '@swc/html';

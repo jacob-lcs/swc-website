@@ -1,3 +1,3 @@
 export default {
-  "variable-management": "Variable Management",
+  "variable-management": "变量管理",
 };

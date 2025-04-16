@@ -2,11 +2,11 @@ import { Callout, Tabs, Tab } from 'nextra/components'
 
 # swc-loader
 
-This module allows you to use SWC with webpack.
+此模块允许你在 webpack 中使用 SWC。
 
-For Rspack users, you can use Rspack's [builtin:swc-loader](https://rspack.dev/guide/features/builtin-swc-loader), without the need to install the swc-loader package.
+对于 Rspack 用户，你可以使用 Rspack 的 [builtin:swc-loader](https://rspack.dev/guide/features/builtin-swc-loader)，无需安装 swc-loader 包。
 
-## Installation
+## 安装
 
 <Tabs items={['pnpm', 'npm', 'yarn']}>
   <Tabs.Tab>
@@ -26,7 +26,7 @@ For Rspack users, you can use Rspack's [builtin:swc-loader](https://rspack.dev/g
   </Tabs.Tab>
 </Tabs>
 
-## Usage
+## 使用方法
 
 ```js filename="webpack.config.js" copy
 module: {
@@ -35,7 +35,7 @@ module: {
       test: /\.m?js$/,
       exclude: /(node_modules)/,
       use: {
-        // `.swcrc` can be used to configure swc
+        // 可以使用 `.swcrc` 来配置 swc
         loader: "swc-loader"
       }
     }
@@ -43,11 +43,11 @@ module: {
 }
 ```
 
-### Options
+### 选项
 
-Loader options are passed through to SWC as if they were part of your `.swcrc`.
+加载器选项会传递给 SWC，就像它们是你的 `.swcrc` 的一部分一样。
 
-For instance, [to configure `browserslist`-based `targets` for compilation](https://swc.rs/docs/configuration/compilation#env) and see the effect:
+例如，[配置基于 `browserslist` 的编译 `targets`](https://swc.rs/docs/configuration/compilation#env) 并查看效果：
 
 ```js
 {
@@ -63,13 +63,13 @@ For instance, [to configure `browserslist`-based `targets` for compilation](http
 }
 ```
 
-### React Development
+### React 开发
 
-The [`jsc.transform.react.development`](/docs/configuration/compilation#jsctransformreactdevelopment) option is automatically set based on the [webpack `mode`](https://webpack.js.org/configuration/mode/).
+[`jsc.transform.react.development`](/docs/configuration/compilation#jsctransformreactdevelopment) 选项会根据 [webpack 的 `mode`](https://webpack.js.org/configuration/mode/) 自动设置。
 
-### With babel-loader
+### 与 babel-loader 一起使用
 
-When used with babel-loader, the parseMap option must be set to true.
+当与 babel-loader 一起使用时，必须将 parseMap 选项设置为 true。
 
 ```js filename="webpack.config.js" copy
 module: {

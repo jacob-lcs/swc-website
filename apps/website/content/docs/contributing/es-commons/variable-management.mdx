@@ -1,33 +1,33 @@
-# Variable Management
+# 变量管理
 
-SWC uses a very unique way to manage variables.
+SWC 使用一种独特的方式来管理变量。
 
-## Syntax context
+## 语法上下文
 
-SWC uses a syntax context to manage variables. Internals are documented at [the rustdoc of the `resolver` pass](https://rustdoc.swc.rs/swc_core/ecma/transforms/base/fn.resolver.html).
+SWC 使用语法上下文来管理变量。内部细节记录在 [`resolver` 转换的 Rustdoc](https://rustdoc.swc.rs/swc_core/ecma/transforms/base/fn.resolver.html) 中。
 
-Basically the order of processing is like this. This processing should be wrapped by `GLOBALS.set(&Default::default(), || { ... })`.
+基本处理顺序如下。此处理应该被 `GLOBALS.set(&Default::default(), || { ... })` 包裹。
 
 - `resolver`
-- `your_pass` (can be multiple passes)
+- `your_pass`（可以是多个转换）
 - `hygiene`
-- `fixer` (Optional, but if your transform may produce invalid syntax, this would add necessary parentheses)
+- `fixer`（可选，但如果您的转换可能产生无效语法，这将添加必要的括号）
 
-## Terms
+## 术语
 
-A `private identifier` is a identifier that is guaranteed to be unique, and it's renamed by the `hygiene` pass if there's a conflict.
+`private identifier`（私有标识符）是保证唯一的标识符，如果存在冲突，会被 `hygiene` 转换重命名。
 
-## Creating a private identifier
+## 创建私有标识符
 
-You can use `Ident::new_private` to create a private identifier. Note that this requires an access to `GLOBALS`, which is a scoped thread-local storage.
+您可以使用 `Ident::new_private` 创建私有标识符。请注意，这需要访问 `GLOBALS`，它是一个作用域线程本地存储。
 
 ```rust
 let id = Ident::new_private("my_var");
 ```
 
-## Full example
+## 完整示例
 
-Full example:
+完整示例：
 
 ```rust
 GLOBALS.set(&Default::default(), || {
@@ -37,11 +37,11 @@ GLOBALS.set(&Default::default(), || {
   // https://rustdoc.swc.rs/swc_core/ecma/transforms/base/fn.resolver.html
   program.mutate(resolver(unresolved_mark, top_level_mark, is_your_input_file_typescript));
 
-  // Apply your transforms and use Ident::new_private from there
+  // 在此应用您的转换并从那里使用 Ident::new_private
   program.mutate(your_pass);
-  // or
+  // 或
   program.visit_mut_with(your_pass);
-  // or
+  // 或
   program = program.fold(your_pass);
 
 

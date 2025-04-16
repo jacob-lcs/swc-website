@@ -1,5 +1,5 @@
 export default {
-  commons: "Commons",
-  "es-commons": "ECMAScript Commons",
-  "es-minifier": "ECMAScript Minifier",
+  commons: "通用组件",
+  "es-commons": "ECMAScript 通用组件",
+  "es-minifier": "ECMAScript 压缩器",
 };

@@ -1,23 +1,23 @@
-# Publishing plugins
+# 发布插件
 
-If you prefer reading codes, you can refer to [the repository for official plugins](https://github.com/swc-project/plugins).
+如果您偏好阅读代码，可以参考[官方插件仓库](https://github.com/swc-project/plugins)。
 
-## Creating a npm package
+## 创建 npm 包
 
-### Building a plugin as a wasm
+### 将插件构建为 wasm
 
-You can run your plugin as a wasm file by running
+您可以通过运行以下命令将插件编译为 wasm 文件
 
 ```sh
-cargo build-wasi --release // build wasm32-wasi target binary
-cargo build-wasm32 --release // build wasm32-unknown-unknown target binary
+cargo build-wasi --release // 构建 wasm32-wasi 目标二进制文件
+cargo build-wasm32 --release // 构建 wasm32-unknown-unknown 目标二进制文件
 ```
 
-It will create `target/wasm32-wasi/release/your_plugin_name.wasm` or `target/wasm32-unknown-unknown/release/your_plugin_name.wasm`, depending on your config.
+根据您的配置，这将创建 `target/wasm32-wasi/release/your_plugin_name.wasm` 或 `target/wasm32-unknown-unknown/release/your_plugin_name.wasm`。
 
-### Creating a npm package for plugin
+### 为插件创建 npm 包
 
-Add the following to your `package.json`:
+在您的 `package.json` 中添加以下内容：
 
 ```json filename="package.json"
 {
@@ -28,31 +28,31 @@ Add the following to your `package.json`:
 }
 ```
 
-## Advanced: Improving your plugin
+## 高级：优化您的插件
 
-### Adjusting configuration for smaller binary
+### 调整配置以减小二进制文件大小
 
-You can reduce the size of the plugin by configuring cargo.
+您可以通过配置 cargo 来减小插件的大小。
 
-In your `Cargo.toml` file, you can add the following lines.
+在您的 `Cargo.toml` 文件中，可以添加以下内容：
 
 ```toml filename="Cargo.toml"
 [profile.release]
-# This removes more dead code
+# 这将移除更多的无用代码
 codegen-units = 1
 lto = true
-# Optimize for size
+# 优化以减小体积
 opt-level = "s"
-# Optimize for performance, this is default so you don't need to specify it
+# 优化性能，这是默认值，因此您无需特别指定
 # opt-level = "z"
 
-# Strip debug symbols
+# 移除调试符号
 strip = "symbols"
 ```
 
-### Removing log for release mode
+### 在发布模式下移除日志
 
-If logging of your crate is too much, you can remove it by enabling `release_max_level_*` of `tracing`, like
+如果您的包日志过多，可以通过启用 `tracing` 的 `release_max_level_*` 功能来限制，例如：
 
 ```toml
 tracing = { version="0.1", features = ["release_max_level_info"] }

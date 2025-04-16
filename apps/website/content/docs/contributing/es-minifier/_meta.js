@@ -1,4 +1,4 @@
 export default {
-  profiling: "Profiling",
-  "debugging-nextjs-app": "Debugging Next.js App",
+  profiling: "性能分析",
+  "debugging-nextjs-app": "调试 Next.js 应用",
 };

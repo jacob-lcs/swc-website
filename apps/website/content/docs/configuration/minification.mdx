@@ -1,48 +1,47 @@
 import { Callout } from 'nextra/components';
 
-# Minification
+# 代码压缩
 
 <Callout emoji="⚠️">
-  This section is for people who want to use swc as a last step of the build process.
-  If you want to use the swc minifier with a bundler, see the documentation for
-  - <a href="https://webpack.js.org/plugins/terser-webpack-plugin/#swc">swcMinify with the Terser Webpack Plugin</a>
-  - <a href="https://www.npmjs.com/package/swc-minify-webpack-plugin">SWC Minify Webpack Plugin</a> which is a
-  standalone tool if you only want minification.
+  本节面向希望使用 swc 作为构建过程最后一步的用户。
+  如果您想使用 swc 压缩器与打包工具一起使用，请参阅以下文档：
+  - <a href="https://webpack.js.org/plugins/terser-webpack-plugin/#swcminify">在 Terser Webpack Plugin 中使用 swcMinify</a>
+  - <a href="https://www.npmjs.com/package/swc-minify-webpack-plugin">SWC Minify Webpack Plugin</a>，一个独立工具，适用于您只需要代码压缩的情况。
 </Callout>
 
-# Assumptions
+# 假设条件
 
-SWC Minifier makes small amount of assumptions to make the minification efficient. This is similar to other minifiers.
+SWC 压缩器做出少量假设以提高压缩效率。这与其他压缩器类似。
 
-- `.toString()` and `.valueOf()` don't have side effects, and for built-in objects they have not been overridden.
+- `.toString()` 和 `.valueOf()` 没有副作用，并且对于内置对象，它们没有被重写。
 
-- `undefined`, `NaN` and `Infinity` have not been externally redefined.
+- `undefined`、`NaN` 和 `Infinity` 没有被外部重新定义。
 
-- `arguments.callee`, `arguments.caller` and `Function.prototype.caller` are not used.
+- 不使用 `arguments.callee`、`arguments.caller` 和 `Function.prototype.caller`。
 
-These are not valid in strict mode.
+这些在严格模式下无效。
 
-- The code doesn't expect the contents of `Function.prototype.toString()` or `Error.prototype.stack` to be anything in particular.
+- 代码不期望 `Function.prototype.toString()` 或 `Error.prototype.stack` 的内容是特定的内容。
 
-- Getting and setting properties on a plain object does not cause other side effects (using `.watch()` or `Proxy`).
+- 获取和设置纯对象上的属性不会导致其他副作用（使用 `.watch()` 或 `Proxy`）。
 
-- Object properties can be added, removed and modified (not prevented with `Object.defineProperty()`, `Object.defineProperties()`, `Object.freeze()`, `Object.preventExtensions()` or `Object.seal()`).
+- 可以添加、删除和修改对象属性（没有通过 `Object.defineProperty()`、`Object.defineProperties()`、`Object.freeze()`、`Object.preventExtensions()` 或 `Object.seal()` 阻止）。
 
-- `document.all` is not `null`.
+- `document.all` 不是 `null`。
 
-- Assigning properties to a class doesn't have side effects and does not throw.
+- 给类分配属性没有副作用且不会抛出异常。
 
-- Acesssing **declared** top-level identifiers do not have side effects.
+- 访问**已声明的**顶级标识符没有副作用。
 
-If you declare a variable on `globalThis` using a getter with side-effects, SWC Minifier will likely break it.
+如果您使用带有副作用的 getter 在 `globalThis` 上声明变量，SWC 压缩器很可能会破坏它。
 
-- TDZ violation does not exist.
+- 没有 TDZ 违规。
 
-TDZ violation will be ignored and not preserved.
+TDZ 违规将被忽略且不会被保留。
 
-- Arithmetic expression may **not** have side effects.
+- 算术表达式可能**不会**有副作用。
 
-This assumption means that you can't rely on the exception thrown by the JS engine when adding a bigint and a number.
+这个假设意味着您不能依赖 JS 引擎在将大整数和数字相加时抛出的异常。
 
 ```ts
 const a = 1n;
@@ -50,19 +49,19 @@ const b = 1;
 const c = a + b;
 ```
 
-If you execute this code, the JS engine will throw an exception. But SWC Minifier will ignore it.
+如果您执行此代码，JS 引擎将抛出异常。但 SWC 压缩器会忽略它。
 
-Related: [terser - compiler assumptions](https://github.com/terser/terser#compiler-assumptions)
+相关：[terser - 编译器假设](https://github.com/terser/terser#compiler-assumptions)
 
 ---
 
-Starting with `v1.2.67`, you can configure SWC to minify your code by enabling `minify` in your `.swcrc` file:
+从 `v1.2.67` 开始，您可以通过在 `.swcrc` 文件中启用 `minify` 来配置 SWC 压缩代码：
 
 ```json filename=".swcrc" copy
 {
-  // Enable minification
+  // 启用压缩
   "minify": true,
-  // Optional, configure minification options
+  // 可选，配置压缩选项
   "jsc": {
     "minify": {
       "compress": {
@@ -74,113 +73,113 @@ Starting with `v1.2.67`, you can configure SWC to minify your code by enabling `
 }
 ```
 
-## Configuration
+## 配置
 
-### Note about comments
+### 关于注释的说明
 
-If you set `jsc.minify.compress` to `true` or `{}`, SWC will remove all comments starting from `v1.11.11`.
-Previous versions will preserve only license comments.
-If you don't want this, modify `jsc.minify.format`.
+如果您将 `jsc.minify.compress` 设置为 `true` 或 `{}`，从 `v1.11.11` 开始，SWC 将删除所有注释。
+之前的版本将仅保留许可证注释。
+如果您不希望这样，请修改 `jsc.minify.format`。
 
 ### `jsc.minify.compress`
 
-Type: `boolean | object`.
+类型：`boolean | object`。
 
-Similar to [the compress option](https://terser.org/docs/options/#compress-options) of `terser`.
+类似于 `terser` 的 [compress 选项](https://terser.org/docs/options/#compress-options)。
 
 ```json filename=".swcrc" copy
 {
   "jsc": {
     "minify": {
-      "compress": true // equivalent to {}
+      "compress": true // 等同于 {}
     }
   }
 }
 ```
 
-- `arguments`, defaults to `false`.
-- `arrows`, defaults to `true`.
-- `booleans`, defaults to `true`.
-- `booleans_as_integers`, defaults to `false`.
-- `collapse_vars`, defaults to `true`.
-- `comparisons`, defaults to `true`.
-- `computed_props`, defaults to `true`.
-- `conditionals`, defaults to `true`.
-- `dead_code`, defaults to `true`.
-- `defaults`, defaults to `true`.
-- `directives`, defaults to `true`.
-- `drop_console`, defaults to `false`.
-- `drop_debugger`, defaults to `true`.
-- `ecma`, defaults to `5`.
-- `evaluate`, defaults to `true`.
-- `global_defs`, defaults to `{}`.
-- `hoist_funs`, defaults to `false`.
-- `hoist_props`, defaults to `true`.
-- `hoist_vars`, defaults to `false`.
-- `ie8`, Ignored.
-- `if_return`, defaults to `true`.
-- `inline`, defaults to `true`.
-- `join_vars`, defaults to `true`.
-- `keep_classnames`, defaults to `false`.
-- `keep_fargs`, defaults to `false`.
-- `keep_infinity`, defaults to `false`.
-- `loops`, defaults to `true`.
-- `negate_iife`, defaults to `true`.
-- `passes`, defaults to `0`, which means no limit.
-- `properties`, defaults to `true`.
-- `pure_getters`, defaults to ``.
-- `pure_funcs`, defaults to `[]`. Type is an array of string.
-- `reduce_funcs`, defaults to `false`.
-- `reduce_vars`, defaults to `true`.
-- `sequences`, defaults to `true`.
-- `side_effects`, defaults to `true`.
-- `switches`, defaults to `true`.
-- `top_retain`, defaults to ``.
-- `toplevel`, defaults to `true`.
-- `typeofs`, defaults to `true`.
-- `unsafe`, defaults to `false`.
-- `unsafe_arrows`, defaults to `false`.
-- `unsafe_comps`, defaults to `false`.
-- `unsafe_Function`, defaults to `false`.
-- `unsafe_math`, defaults to `false`.
-- `unsafe_symbols`, defaults to `false`.
-- `unsafe_methods`, defaults to `false`.
-- `unsafe_proto`, defaults to `false`.
-- `unsafe_regexp`, defaults to `false`.
-- `unsafe_undefined`, defaults to `false`.
-- `unused`, defaults to `true`.
-- `module`, Ignored. Currently, all files are treated as module.
+- `arguments`，默认为 `false`。
+- `arrows`，默认为 `true`。
+- `booleans`，默认为 `true`。
+- `booleans_as_integers`，默认为 `false`。
+- `collapse_vars`，默认为 `true`。
+- `comparisons`，默认为 `true`。
+- `computed_props`，默认为 `true`。
+- `conditionals`，默认为 `true`。
+- `dead_code`，默认为 `true`。
+- `defaults`，默认为 `true`。
+- `directives`，默认为 `true`。
+- `drop_console`，默认为 `false`。
+- `drop_debugger`，默认为 `true`。
+- `ecma`，默认为 `5`。
+- `evaluate`，默认为 `true`。
+- `global_defs`，默认为 `{}`。
+- `hoist_funs`，默认为 `false`。
+- `hoist_props`，默认为 `true`。
+- `hoist_vars`，默认为 `false`。
+- `ie8`，已忽略。
+- `if_return`，默认为 `true`。
+- `inline`，默认为 `true`。
+- `join_vars`，默认为 `true`。
+- `keep_classnames`，默认为 `false`。
+- `keep_fargs`，默认为 `false`。
+- `keep_infinity`，默认为 `false`。
+- `loops`，默认为 `true`。
+- `negate_iife`，默认为 `true`。
+- `passes`，默认为 `0`，表示没有限制。
+- `properties`，默认为 `true`。
+- `pure_getters`，默认为 ``。
+- `pure_funcs`，默认为 `[]`。类型为字符串数组。
+- `reduce_funcs`，默认为 `false`。
+- `reduce_vars`，默认为 `true`。
+- `sequences`，默认为 `true`。
+- `side_effects`，默认为 `true`。
+- `switches`，默认为 `true`。
+- `top_retain`，默认为 ``。
+- `toplevel`，默认为 `true`。
+- `typeofs`，默认为 `true`。
+- `unsafe`，默认为 `false`。
+- `unsafe_arrows`，默认为 `false`。
+- `unsafe_comps`，默认为 `false`。
+- `unsafe_Function`，默认为 `false`。
+- `unsafe_math`，默认为 `false`。
+- `unsafe_symbols`，默认为 `false`。
+- `unsafe_methods`，默认为 `false`。
+- `unsafe_proto`，默认为 `false`。
+- `unsafe_regexp`，默认为 `false`。
+- `unsafe_undefined`，默认为 `false`。
+- `unused`，默认为 `true`。
+- `module`，已忽略。目前，所有文件都被视为模块。
 
 ### `jsc.minify.mangle`
 
-Type: `boolean | object`.
+类型：`boolean | object`。
 
-Similar to [the mangle option](https://terser.org/docs/options/#mangle-options) of `terser`.
+类似于 `terser` 的 [mangle 选项](https://terser.org/docs/options/#mangle-options)。
 
 ```json filename=".swcrc" copy
 {
   "jsc": {
     "minify": {
-      "mangle": true // equivalent to {}
+      "mangle": true // 等同于 {}
     }
   }
 }
 ```
 
-- `props`, Defaults to `false`, and `true` is identical to `{}`.
-- `topLevel`, Defaults to `true`. Aliased as `toplevel` for compatibility with `terser`.
-- `keepClassNames`, Defaults to `false`. Aliased as `keep_classnames` for compatibility with `terser`.
-- `keepFnNames`, Defaults to `false`.
-- `keepPrivateProps`, Defaults to `false`. Aliased as `keep_private_props` for compatibility with `terser`.
-- `reserved`, Defaults to `[]`
-- `ie8`, Ignored.
-- `safari10`, Defaults to `false`.
+- `props`，默认为 `false`，`true` 与 `{}` 相同。
+- `topLevel`，默认为 `true`。为与 `terser` 兼容而别名为 `toplevel`。
+- `keepClassNames`，默认为 `false`。为与 `terser` 兼容而别名为 `keep_classnames`。
+- `keepFnNames`，默认为 `false`。
+- `keepPrivateProps`，默认为 `false`。为与 `terser` 兼容而别名为 `keep_private_props`。
+- `reserved`，默认为 `[]`
+- `ie8`，已忽略。
+- `safari10`，默认为 `false`。
 
 #### `jsc.minify.mangle.properties`
 
-Type: `object`.
+类型：`object`。
 
-Similar to [the mangle properties option](https://terser.org/docs/options/#mangle-properties-options) of `terser`.
+类似于 `terser` 的 [mangle properties 选项](https://terser.org/docs/options/#mangle-properties-options)。
 
 ```json filename=".swcrc" copy
 {
@@ -198,46 +197,46 @@ Similar to [the mangle properties option](https://terser.org/docs/options/#mangl
 }
 ```
 
-- `reserved`: Don't use these names as properties.
+- `reserved`：不要将这些名称用作属性。
 
-- `undeclared`: Mangle properties even if it's not declared.
+- `undeclared`：即使未声明，也混淆属性。
 
-- `regex`: Mangle properties only if it matches this regex
+- `regex`：仅当属性匹配此正则表达式时才混淆
 
 ### `jsc.minify.format`
 
-These properties are mostly not implemented yet, but it exists to support passing terser config to swc minify without modification.
+这些属性大多尚未实现，但它们的存在是为了支持将 terser 配置传递给 swc 压缩器而无需修改。
 
-- `asciiOnly`, Defaults to `false`. Implemented as `v1.2.184` and aliased as `ascii_only` for compatibility with `terser`.
-- `beautify`, Defaults to `false`. Currently noop.
-- `braces`, Defaults to `false`. Currently noop.
-- `comments`, Defaults to `some`.
-  - `false` removes all comments
-  - `'some'` preserves some comments
-  - `'all'` preserves all comments
-- `ecma`, Defaults to 5. Currently noop.
-- `indentLevel`, Currently noop and aliases as `indent_level` for compatibility with `terser`.
-- `indentStart`, Currently noop and aliases as `indent_start` for compatibility with `terser`.
-- `inlineScript`, Aliases as `inline_script` for compatibility with `terser` and requires `@swc/core@1.9.2` or later.
-- `keepNumbers`, Currently noop and aliases as `keep_numbers` for compatibility with `terser`.
-- `keepQuotedProps`, Currently noop and aliases as `keep_quoted_props` for compatibility with `terser`.
-- `maxLineLen`, Currently noop, and aliases as `max_line_len` for compatibility with `terser`.
-- `preamble`, Supported since `v1.3.66`.
-- `quoteKeys`, Currently noop and aliases as `quote_keys` for compatibility with `terser`.
-- `quoteStyle`, Currently noop and aliases as `quote_style` for compatibility with `terser`.
-- `preserveAnnotations`, Currently noop and aliases as `preserve_annotations` for compatibility with `terser`.
-- `safari10`, Currently noop.
-- `semicolons`, Currently noop.
-- `shebang`, Currently noop.
-- `webkit`, Currently noop.
-- `wrapIife`, Currently noop and aliases as `wrap_iife` for compatibility with `terser`.
-- `wrapFuncArgs`, Currently noop and aliases as `wrap_func_args` for compatibility with `terser`.
+- `asciiOnly`，默认为 `false`。在 `v1.2.184` 中实现，并为与 `terser` 兼容而别名为 `ascii_only`。
+- `beautify`，默认为 `false`。目前无操作。
+- `braces`，默认为 `false`。目前无操作。
+- `comments`，默认为 `some`。
+  - `false` 删除所有注释
+  - `'some'` 保留部分注释
+  - `'all'` 保留所有注释
+- `ecma`，默认为 5。目前无操作。
+- `indentLevel`，目前无操作，并为与 `terser` 兼容而别名为 `indent_level`。
+- `indentStart`，目前无操作，并为与 `terser` 兼容而别名为 `indent_start`。
+- `inlineScript`，为与 `terser` 兼容而别名为 `inline_script`，需要 `@swc/core@1.9.2` 或更高版本。
+- `keepNumbers`，目前无操作，并为与 `terser` 兼容而别名为 `keep_numbers`。
+- `keepQuotedProps`，目前无操作，并为与 `terser` 兼容而别名为 `keep_quoted_props`。
+- `maxLineLen`，目前无操作，并为与 `terser` 兼容而别名为 `max_line_len`。
+- `preamble`，自 `v1.3.66` 起支持。
+- `quoteKeys`，目前无操作，并为与 `terser` 兼容而别名为 `quote_keys`。
+- `quoteStyle`，目前无操作，并为与 `terser` 兼容而别名为 `quote_style`。
+- `preserveAnnotations`，目前无操作，并为与 `terser` 兼容而别名为 `preserve_annotations`。
+- `safari10`，目前无操作。
+- `semicolons`，目前无操作。
+- `shebang`，目前无操作。
+- `webkit`，目前无操作。
+- `wrapIife`，目前无操作，并为与 `terser` 兼容而别名为 `wrap_iife`。
+- `wrapFuncArgs`，目前无操作，并为与 `terser` 兼容而别名为 `wrap_func_args`。
 
-## @swc/core Usage
+## @swc/core 使用方法
 
 ### swc.minify(code, options)
 
-This API is asynchronous and all of parsing, minification, and code generation will be done in background thread. The `options` argument is same as `jsc.minify` object. For example:
+此 API 是异步的，所有解析、压缩和代码生成都将在后台线程中完成。`options` 参数与 `jsc.minify` 对象相同。例如：
 
 ```js
 import swc from "@swc/core";
@@ -253,11 +252,11 @@ const { code, map } = await swc.minify(
 expect(code).toMatchInlineSnapshot(`"import a from'@src/app';console.log(a);"`);
 ```
 
-Returns `Promise<{ code: string, map: string }>`.
+返回 `Promise<{ code: string, map: string }>`。
 
 ### swc.minifySync(code, options)
 
-This API exists on `@swc/core`, `@swc/wasm`, `@swc/wasm-web`.
+此 API 存在于 `@swc/core`、`@swc/wasm`、`@swc/wasm-web` 中。
 
 ```js
 import swc from "@swc/core";
@@ -274,13 +273,13 @@ const { code, map } = swc.minifySync(
 expect(code).toMatchInlineSnapshot(`"import a from'@src/app';console.log(a);"`);
 ```
 
-Returns `{ code: string, map: string }`.
+返回 `{ code: string, map: string }`。
 
-## APIs for WebAssembly
+## WebAssembly API
 
-### Replacing Terser
+### 替换 Terser
 
-You can reduce build time and override Terser without needing a library to update their dependencies through [yarn resolutions](https://classic.yarnpkg.com/lang/en/docs/selective-version-resolutions/). Example `package.json` would include:
+您可以减少构建时间并覆盖 Terser，而无需通过[yarn resolutions](https://classic.yarnpkg.com/lang/en/docs/selective-version-resolutions/)让库更新它们的依赖项。示例 `package.json` 将包含：
 
 ```json filename="package.json"
 {
@@ -288,7 +287,7 @@ You can reduce build time and override Terser without needing a library to updat
 }
 ```
 
-This will use the SWC minifier instead of Terser for all nested dependencies. Ensure you remove your lockfile and re-install your dependencies.
+这将为所有嵌套依赖项使用 SWC 压缩器而不是 Terser。确保删除锁文件并重新安装依赖项。
 
 ```sh
 $ rm -rf node_modules yarn.lock

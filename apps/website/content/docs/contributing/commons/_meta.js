@@ -1,3 +1,3 @@
 export default {
-  "string-management": "String Management",
+  "string-management": "字符串管理",
 };

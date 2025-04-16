@@ -1,16 +1,16 @@
-## String Interning
+## 字符串内部化
 
-See [`hstr`][] for more details.
+详细信息请参阅 [`hstr`][]。
 
-SWC interns strings if it's not too short nor too long.
-This is useful for reducing memory usage and improving performance because SWC is a sort of compiler.
-Many variables share the same string, and we have to perform lots of hash operations on them.
+SWC 对不太短也不太长的字符串进行内部化。
+这对减少内存使用和提高性能非常有用，因为 SWC 是一种编译器。
+许多变量共享相同的字符串，我们需要对它们执行大量哈希运算。
 
-It does not intern too short strings because we can avoid allocations for them.
-It does not intern too long strings because it's not worth it.
-Typically, long strings are not same to each other.
+SWC 不对太短的字符串进行内部化，因为我们可以避免为它们分配内存。
+也不对太长的字符串进行内部化，因为这样做价值不大。
+通常，长字符串彼此之间并不相同。
 
-While interning strings, SWC calculates the hash of the string.
-It makes `hash()` `O(1)`. `eq` becomes much faster although it's not strictly `O(1)`.
+在进行字符串内部化的同时，SWC 会计算字符串的哈希值。
+这使得 `hash()` 操作的复杂度为 `O(1)`。虽然 `eq` 操作严格来说不是 `O(1)`，但它变得更快。
 
 [hstr]: https://docs.rs/hstr

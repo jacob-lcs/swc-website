@@ -1,21 +1,21 @@
 import { Callout, Tab, Tabs } from 'nextra/components'
 
-# Bundling (swcpack)
+# 打包 (swcpack)
 
 <Callout emoji="🚧">
-  This feature will be dropped in v2, in favor of SWC-based bundlers like [Parcel 2](https://parceljs.org/), [Turbopack](https://turbo.build/pack/docs), [rspack](https://rspack.dev/), [fe-farm](https://www.farmfe.org/).
+  这个功能将在 v2 版本中移除，推荐使用基于 SWC 的打包工具，如 [Parcel 2](https://parceljs.org/)、[Turbopack](https://turbo.build/pack/docs)、[rspack](https://rspack.dev/)、[fe-farm](https://www.farmfe.org/)。
 
-Please use one of the bundlers instead.
+请改用上述打包工具。
 
 </Callout>
 
-SWC is able to bundle multiple JavaScript or TypeScript files into one.
+SWC 能够将多个 JavaScript 或 TypeScript 文件打包成一个文件。
 
-This feature is currently named `spack`, but will be renamed to `swcpack` in `v2`. `spack.config.js` will be deprecated for `swcpack.config.js`.
+这个功能目前名为 `spack`，但在 `v2` 中将重命名为 `swcpack`。`spack.config.js` 将被弃用，改为 `swcpack.config.js`。
 
-View a [basic example of bundling](https://github.com/swc-project/pkgs/tree/main/packages/cli/examples/spack-basic).
+查看[打包的基本示例](https://github.com/swc-project/pkgs/tree/main/packages/cli/examples/spack-basic)。
 
-## Usage
+## 使用方法
 
 <Tabs items={['pnpm', 'npm', 'yarn']}>
   <Tabs.Tab>
@@ -35,21 +35,21 @@ View a [basic example of bundling](https://github.com/swc-project/pkgs/tree/main
   </Tabs.Tab>
 </Tabs>
 
-Create a `spack.config.js` file and run:
+创建一个 `spack.config.js` 文件并运行：
 
 ```bash
 npx spack
 ```
 
-## Configuration
+## 配置
 
-To see all options, [view the configuration](/docs/configuration/bundling).
+查看所有选项，请参阅[配置文档](/docs/configuration/bundling)。
 
-## Features
+## 特性
 
-### Compact Output
+### 紧凑输出
 
-Just like `rollup`, SWC emits compact output.
+就像 `rollup` 一样，SWC 输出紧凑的代码。
 
 ```js filename="a.js"
 console.log("loading A");
@@ -63,7 +63,7 @@ import { a } from "./a";
 a();
 ```
 
-becomes:
+生成：
 
 ```js filename="output.js"
 console.log("loading A");
@@ -73,57 +73,57 @@ function a() {
 a();
 ```
 
-SWC was designed with merging in mind, so naming collisions between multiple files are automatically handled.
+SWC 在设计时就考虑了合并问题，因此会自动处理多个文件之间的命名冲突。
 
-### Tree Shaking
+### 摇树优化 (Tree Shaking)
 
-Just like other modern bundlers, SWC can remove unused exports.
+就像其他现代打包工具一样，SWC 可以移除未使用的导出。
 
-### Import Deglobbing
+### 导入解构 (Import Deglobbing)
 
-To aid with tree-shaking, SWC deglobs imports if possible.
+为了辅助摇树优化，SWC 会尽可能地解构导入。
 
 ```js
 import * as lib from "lib";
 lib.foo();
 ```
 
-behaves exactly same as:
+其行为与以下代码完全相同：
 
 ```js
 import { foo } from "lib";
 foo();
 ```
 
-This preserves all side effects.
+这样可以保留所有副作用。
 
-### CommonJS Support
+### CommonJS 支持
 
-SWC supports importing CommonJS modules and emits more compact output than webpack.
+SWC 支持导入 CommonJS 模块，并且比 webpack 输出更紧凑的代码。
 
 ```js filename="source.js"
 import * as lib from "lib";
-console.log(lib); // Prevent dce
+console.log(lib); // 防止 dce
 ```
 
-If the `lib` above is a CommonJS module, it's transcompiled to:
+如果上面的 `lib` 是一个 CommonJS 模块，它会被转译为：
 
 ```js filename="output.js"
 const load = __spack_require.bind(void 0, function (module, exports) {
-  // Code from lib goes here
+  // 这里是 lib 的代码
 });
 const lib = load();
-console.log(lib); // Prevent dce
+console.log(lib); // 防止 dce
 ```
 
-### Optimizations
+### 优化
 
-- Global Inlining (e.g. `process.env.NODE_ENV`)
-- Inlining
-- Constant propagation
-- Dead code elimination
+- 全局内联（例如 `process.env.NODE_ENV`）
+- 内联
+- 常量传播
+- 死代码消除
 
-The tree shaking described above is using the dead code elimination pass. Currently, SWC can deduce:
+上面描述的摇树优化使用的是死代码消除通道。目前，SWC 可以将：
 
 ```js filename="source.js"
 let b = 2;
@@ -138,17 +138,17 @@ if (a) {
 console.log(c);
 ```
 
-into:
+简化为：
 
 ```js filename="output.js"
 console.log(3);
 ```
 
-### High Performance
+### 高性能
 
-Performance is a priority for SWC. It's very fast because it uses all CPU cores and is optimized by `llvm`.
+性能是 SWC 的优先事项。它非常快，因为它使用所有 CPU 核心并由 `llvm` 优化。
 
-### Multiple Entries Support
+### 多入口支持
 
 ```js filename="spack.config.js"
 const { config } = require("@swc/core/spack");
@@ -165,6 +165,6 @@ module.exports = config({
 });
 ```
 
-### Built-in Chunking
+### 内置代码分割
 
-Using the same config as above, if `android.ts` and `web.ts` both references the same file, it will be extracted as a separate chunk and `web.ts` and `android.ts` will import it.
+使用上面的配置，如果 `android.ts` 和 `web.ts` 都引用了相同的文件，该文件将被提取为单独的块，并且 `web.ts` 和 `android.ts` 将导入它。

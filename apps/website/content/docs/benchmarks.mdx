@@ -1,117 +1,117 @@
 import Benchmark from 'components/benchmarks/dynamic'
 
-# Benchmarks
+# 基准测试
 
-These benchmarks are used to evaluate the performance of SWC on every commit, as well as against other libraries like Babel or esbuild. You can view the [benchmark source code here](https://github.com/swc-project/swc/blob/main/.github/workflows/bench.yml).
+这些基准测试用于评估每次提交时 SWC 的性能，以及与 Babel 或 esbuild 等其他库的对比。你可以在[这里查看基准测试源代码](https://github.com/swc-project/swc/blob/main/.github/workflows/bench.yml)。
 
 <Benchmark />
 
-## Transformations (Parallel)
+## 转换（并行）
 
-This is the most important benchmark, since build tool authors will run tasks concurrently. Note the performance of Babel and `tsx` is indentical for parallel and synchronous benchmarks.
+这是最重要的基准测试，因为构建工具作者会并发运行任务。请注意，Babel 和 `tsx` 在并行和同步基准测试中的性能是相同的。
 
-You can view the [benchmark source code here](https://github.com/kdy1/benchmark-done-right).
-
-### es3
-
-![Benchmark](https://raw.githubusercontent.com/kdy1/benchmark-done-right/main/images/transform/parallel/es3.png)
-
-### es5
-
-![Benchmark](https://raw.githubusercontent.com/kdy1/benchmark-done-right/main/images/transform/parallel/es5.png)
-
-### es2015
-
-![Benchmark](https://raw.githubusercontent.com/kdy1/benchmark-done-right/main/images/transform/parallel/es2015.png)
-
-### es2016
-
-![Benchmark](https://raw.githubusercontent.com/kdy1/benchmark-done-right/main/images/transform/parallel/es2016.png)
-
-### es2017
-
-![Benchmark](https://raw.githubusercontent.com/kdy1/benchmark-done-right/main/images/transform/parallel/es2017.png)
-
-### es2018
-
-![Benchmark](https://raw.githubusercontent.com/kdy1/benchmark-done-right/main/images/transform/parallel/es2018.png)
-
-### es2019
-
-![Benchmark](https://raw.githubusercontent.com/kdy1/benchmark-done-right/main/images/transform/parallel/es2019.png)
-
-### es2020
-
-![Benchmark](https://raw.githubusercontent.com/kdy1/benchmark-done-right/main/images/transform/parallel/es2020.png)
-
-## Transformations (Synchronous)
-
-Not as critical as the parallel benchmark.
+你可以在[这里查看基准测试源代码](https://github.com/kdy1/benchmark-done-right)。
 
 ### es3
 
-![Benchmark](https://raw.githubusercontent.com/kdy1/benchmark-done-right/main/images/transform/sync/es3.png)
+![基准测试](https://raw.githubusercontent.com/kdy1/benchmark-done-right/main/images/transform/parallel/es3.png)
 
 ### es5
 
-![Benchmark](https://raw.githubusercontent.com/kdy1/benchmark-done-right/main/images/transform/sync/es5.png)
+![基准测试](https://raw.githubusercontent.com/kdy1/benchmark-done-right/main/images/transform/parallel/es5.png)
 
 ### es2015
 
-![Benchmark](https://raw.githubusercontent.com/kdy1/benchmark-done-right/main/images/transform/sync/es2015.png)
+![基准测试](https://raw.githubusercontent.com/kdy1/benchmark-done-right/main/images/transform/parallel/es2015.png)
 
 ### es2016
 
-![Benchmark](https://raw.githubusercontent.com/kdy1/benchmark-done-right/main/images/transform/sync/es2016.png)
+![基准测试](https://raw.githubusercontent.com/kdy1/benchmark-done-right/main/images/transform/parallel/es2016.png)
 
 ### es2017
 
-![Benchmark](https://raw.githubusercontent.com/kdy1/benchmark-done-right/main/images/transform/sync/es2017.png)
+![基准测试](https://raw.githubusercontent.com/kdy1/benchmark-done-right/main/images/transform/parallel/es2017.png)
 
 ### es2018
 
-![Benchmark](https://raw.githubusercontent.com/kdy1/benchmark-done-right/main/images/transform/sync/es2018.png)
+![基准测试](https://raw.githubusercontent.com/kdy1/benchmark-done-right/main/images/transform/parallel/es2018.png)
 
 ### es2019
 
-![Benchmark](https://raw.githubusercontent.com/kdy1/benchmark-done-right/main/images/transform/sync/es2019.png)
+![基准测试](https://raw.githubusercontent.com/kdy1/benchmark-done-right/main/images/transform/parallel/es2019.png)
 
 ### es2020
 
-![Benchmark](https://raw.githubusercontent.com/kdy1/benchmark-done-right/main/images/transform/sync/es2020.png)
+![基准测试](https://raw.githubusercontent.com/kdy1/benchmark-done-right/main/images/transform/parallel/es2020.png)
 
-## Transformations (Asynchronous)
+## 转换（同步）
 
-This benchmark suite does not use all CPU cores. For SWC, the benchmark stores only one task on the Node.js thread pool at a time.
+不如并行基准测试那么关键。
 
 ### es3
 
-![Benchmark](https://raw.githubusercontent.com/kdy1/benchmark-done-right/main/images/transform/async/es3.png)
+![基准测试](https://raw.githubusercontent.com/kdy1/benchmark-done-right/main/images/transform/sync/es3.png)
 
 ### es5
 
-![Benchmark](https://raw.githubusercontent.com/kdy1/benchmark-done-right/main/images/transform/async/es5.png)
+![基准测试](https://raw.githubusercontent.com/kdy1/benchmark-done-right/main/images/transform/sync/es5.png)
 
 ### es2015
 
-![Benchmark](https://raw.githubusercontent.com/kdy1/benchmark-done-right/main/images/transform/async/es2015.png)
+![基准测试](https://raw.githubusercontent.com/kdy1/benchmark-done-right/main/images/transform/sync/es2015.png)
 
 ### es2016
 
-![Benchmark](https://raw.githubusercontent.com/kdy1/benchmark-done-right/main/images/transform/async/es2016.png)
+![基准测试](https://raw.githubusercontent.com/kdy1/benchmark-done-right/main/images/transform/sync/es2016.png)
 
 ### es2017
 
-![Benchmark](https://raw.githubusercontent.com/kdy1/benchmark-done-right/main/images/transform/async/es2017.png)
+![基准测试](https://raw.githubusercontent.com/kdy1/benchmark-done-right/main/images/transform/sync/es2017.png)
 
 ### es2018
 
-![Benchmark](https://raw.githubusercontent.com/kdy1/benchmark-done-right/main/images/transform/async/es2018.png)
+![基准测试](https://raw.githubusercontent.com/kdy1/benchmark-done-right/main/images/transform/sync/es2018.png)
 
 ### es2019
 
-![Benchmark](https://raw.githubusercontent.com/kdy1/benchmark-done-right/main/images/transform/async/es2019.png)
+![基准测试](https://raw.githubusercontent.com/kdy1/benchmark-done-right/main/images/transform/sync/es2019.png)
 
 ### es2020
 
-![Benchmark](https://raw.githubusercontent.com/kdy1/benchmark-done-right/main/images/transform/async/es2020.png)
+![基准测试](https://raw.githubusercontent.com/kdy1/benchmark-done-right/main/images/transform/sync/es2020.png)
+
+## 转换（异步）
+
+这个基准测试套件不使用所有 CPU 核心。对于 SWC，基准测试一次只在 Node.js 线程池中存储一个任务。
+
+### es3
+
+![基准测试](https://raw.githubusercontent.com/kdy1/benchmark-done-right/main/images/transform/async/es3.png)
+
+### es5
+
+![基准测试](https://raw.githubusercontent.com/kdy1/benchmark-done-right/main/images/transform/async/es5.png)
+
+### es2015
+
+![基准测试](https://raw.githubusercontent.com/kdy1/benchmark-done-right/main/images/transform/async/es2015.png)
+
+### es2016
+
+![基准测试](https://raw.githubusercontent.com/kdy1/benchmark-done-right/main/images/transform/async/es2016.png)
+
+### es2017
+
+![基准测试](https://raw.githubusercontent.com/kdy1/benchmark-done-right/main/images/transform/async/es2017.png)
+
+### es2018
+
+![基准测试](https://raw.githubusercontent.com/kdy1/benchmark-done-right/main/images/transform/async/es2018.png)
+
+### es2019
+
+![基准测试](https://raw.githubusercontent.com/kdy1/benchmark-done-right/main/images/transform/async/es2019.png)
+
+### es2020
+
+![基准测试](https://raw.githubusercontent.com/kdy1/benchmark-done-right/main/images/transform/async/es2020.png)
